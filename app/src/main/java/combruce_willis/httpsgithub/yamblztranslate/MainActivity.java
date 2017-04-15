@@ -9,10 +9,20 @@ import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 
+import com.ncapdevi.fragnav.FragNavController;
+
+import java.util.ArrayList;
+import java.util.List;
+
 public class MainActivity extends AppCompatActivity {
 
-    private Fragment fragment;
-    private FragmentManager fragmentManager;
+    private android.support.v4.app.Fragment fragment;
+    private android.support.v4.app.FragmentManager fragmentManager;
+    private FragNavController fragNavController;
+
+    private final int TAB_TRANSLATE = FragNavController.TAB1;
+    private final int TAB_FAVORITE = FragNavController.TAB2;
+    private final int TAB_HISTORY = FragNavController.TAB3;
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -21,17 +31,15 @@ public class MainActivity extends AppCompatActivity {
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
             switch (item.getItemId()) {
                 case R.id.navigation_translate:
-                    fragment = new TranslateFragment();
+                    fragNavController.switchTab(TAB_TRANSLATE);
                     break;
                 case R.id.navigation_favorites:
-                    fragment = new FavoriteFragment();
+                    fragNavController.switchTab(TAB_FAVORITE);
                     break;
                 case R.id.navigation_history:
-                    fragment = new HistoryFragment();
+                    fragNavController.switchTab(TAB_HISTORY);
                     break;
             }
-            final FragmentTransaction transaction = fragmentManager.beginTransaction();
-            transaction.replace(R.id.fragmentContainer, fragment).commit();
             return true;
         }
 
@@ -42,10 +50,12 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        fragmentManager = getFragmentManager();
-        fragment = new TranslateFragment();
-        final FragmentTransaction transaction = fragmentManager.beginTransaction();
-        transaction.add(R.id.fragmentContainer, fragment).commit();
+        List<android.support.v4.app.Fragment> fragments = new ArrayList<>(3);
+        fragments.add(new TranslateFragment());
+        fragments.add(new FavoriteFragment());
+        fragments.add(new HistoryFragment());
+        fragNavController = new FragNavController(getSupportFragmentManager(), R.id.fragmentContainer, fragments);
+        fragNavController.switchTab(TAB_TRANSLATE);
 
         BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
