@@ -1,8 +1,5 @@
 package combruce_willis.httpsgithub.yamblztranslate;
 
-import android.app.Fragment;
-import android.app.FragmentManager;
-import android.app.FragmentTransaction;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
@@ -16,8 +13,6 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
-    private android.support.v4.app.Fragment fragment;
-    private android.support.v4.app.FragmentManager fragmentManager;
     private FragNavController fragNavController;
 
     private final int TAB_TRANSLATE = FragNavController.TAB1;
@@ -54,7 +49,11 @@ public class MainActivity extends AppCompatActivity {
         fragments.add(new TranslateFragment());
         fragments.add(new FavoriteFragment());
         fragments.add(new HistoryFragment());
-        fragNavController = new FragNavController(getSupportFragmentManager(), R.id.fragmentContainer, fragments);
+
+        FragNavController.Builder builder = FragNavController.newBuilder(savedInstanceState, getSupportFragmentManager(), R.id.fragmentContainer);
+        builder.rootFragments(fragments);
+        fragNavController = builder.build();
+
         fragNavController.switchTab(TAB_TRANSLATE);
 
         BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
