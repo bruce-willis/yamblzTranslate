@@ -12,9 +12,6 @@ import android.view.ViewGroup;
  */
 
 public class HistoryFragment extends Fragment {
-    public HistoryFragment() {
-    }
-
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {

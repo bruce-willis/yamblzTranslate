@@ -12,9 +12,6 @@ import android.view.ViewGroup;
  */
 
 public class FavoriteFragment extends Fragment{
-    public FavoriteFragment() {
-    }
-
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {

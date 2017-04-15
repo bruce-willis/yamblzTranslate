@@ -12,9 +12,6 @@ import android.view.ViewGroup;
  */
 
 public class TranslateFragment extends Fragment {
-    public TranslateFragment() {
-    }
-
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater,@Nullable ViewGroup container, Bundle savedInstanceState) {
