@@ -21,13 +21,13 @@ public class MainActivity extends AppCompatActivity {
         @Override
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
             switch (item.getItemId()) {
-                case R.id.navigation_home:
+                case R.id.navigation_translate:
                     fragment = new TranslateFragment();
                     break;
-                case R.id.navigation_dashboard:
+                case R.id.navigation_favorites:
                     fragment = new FavoriteFragment();
                     break;
-                case R.id.navigation_notifications:
+                case R.id.navigation_history:
                     fragment = new HistoryFragment();
                     break;
             }
