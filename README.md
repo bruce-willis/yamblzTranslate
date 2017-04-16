@@ -1,4 +1,4 @@
-!# yamblzTranslate
+# yamblzTranslate
 ### TO-DO list
 Task              | Status
 ------------------|-------------------
