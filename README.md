@@ -1,4 +1,4 @@
-# yamblzTranslate
+!# yamblzTranslate
 ### TO-DO list
 Task              | Status
 ------------------|-------------------
@@ -19,7 +19,7 @@ Offline mode (like [Shazam offline](https://support.shazam.com/hc/en-us/articles
   [GitHub sample](https://github.com/hitherejoe/BottomNavigationViewSample)
 * #### Fragments
   * [Stackoverflow answer](http://stackoverflow.com/a/40767419), [GitHub sample](https://github.com/1priyank1/BottomNavigation-Demo)
-  * [Wow so much detailed post](https://appsandbiscuits.com/bottom-navigation-android-11-5c5a2d758681)
+  * ![doge](https://cloud.githubusercontent.com/assets/296796/3511506/4042665c-06b0-11e4-953c-4f14c11f81ec.png)[Wow so much detailed post](https://appsandbiscuits.com/bottom-navigation-android-11-5c5a2d758681)
 * #### Multiple stack of fragments
   * [Life without Fragments](https://speakerdeck.com/johnkil/life-without-fragments) by [johnkil](https://github.com/johnkil)
   * [Multiple back stacks by JetRadar](https://github.com/JetradarMobile/android-multibackstack)
