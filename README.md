@@ -24,4 +24,5 @@ Offline mode (like [Shazam offline](https://support.shazam.com/hc/en-us/articles
   * [Life without Fragments](https://speakerdeck.com/johnkil/life-without-fragments) by [johnkil](https://github.com/johnkil)
   * [Multiple back stacks by JetRadar](https://github.com/JetradarMobile/android-multibackstack)
   * [Library for managing multiple stacks of fragments](https://github.com/ncapdevi/FragNav)
-  
+* #### EditText with Done action button
+  * [Stackoverflow answer about Multi-line EditText with Done action button which helped me after 2 unsuccessful hours trying to implement it](http://stackoverflow.com/a/41022589)
