@@ -4,6 +4,7 @@ package combruce_willis.httpsgithub.yamblztranslate;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.text.InputType;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,7 +16,7 @@ import android.widget.TextView;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class TranslateFragment extends Fragment {
+public class TranslateFragment extends Fragment implements TextView.OnEditorActionListener {
 
 
     public TranslateFragment() {
@@ -30,7 +31,16 @@ public class TranslateFragment extends Fragment {
         View view =  inflater.inflate(R.layout.fragment_translate, container, false);
         EditText editText = (EditText)  view.findViewById(R.id.Translation);
         editText.setRawInputType(InputType.TYPE_CLASS_TEXT);
+        editText.setOnEditorActionListener(this);
         return view;
     }
 
+    @Override
+    public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+        if (actionId == EditorInfo.IME_ACTION_DONE)
+        {
+
+        }
+        return false;
+    }
 }
