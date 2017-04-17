@@ -3,6 +3,7 @@ package combruce_willis.httpsgithub.yamblztranslate;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
+import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 
@@ -11,7 +12,7 @@ import com.ncapdevi.fragnav.FragNavController;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements FragNavController.RootFragmentListener  {
 
     private FragNavController fragNavController;
 
@@ -45,14 +46,9 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        List<android.support.v4.app.Fragment> fragments = new ArrayList<>(3);
-        fragments.add(new TranslateFragment());
-        fragments.add(new FavoriteFragment());
-        fragments.add(new HistoryFragment());
-
-        FragNavController.Builder builder = FragNavController.newBuilder(savedInstanceState, getSupportFragmentManager(), R.id.fragmentContainer);
-        builder.rootFragments(fragments);
-        fragNavController = builder.build();
+        fragNavController = FragNavController.newBuilder(savedInstanceState, getSupportFragmentManager(), R.id.fragmentContainer)
+                .rootFragmentListener(this, 3)
+                .build();
 
         fragNavController.switchTab(TAB_TRANSLATE);
 
@@ -60,4 +56,13 @@ public class MainActivity extends AppCompatActivity {
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
     }
 
+    @Override
+    public Fragment getRootFragment(int index) {
+        switch (index) {
+            case TAB_TRANSLATE: return new TranslateFragment();
+            case TAB_HISTORY: return new HistoryFragment();
+            case TAB_FAVORITE: return new FavoriteFragment();
+        }
+        throw new IllegalStateException("Need to send known index");
+    }
 }

@@ -2,7 +2,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="combruce_willis.httpsgithub.yamblztranslate.TranslateFragment">
+    tools:context="combruce_willis.httpsgithub.yamblztranslate.TranslateFragment"
+    android:orientation="vertical">
 
     <EditText
         android:id="@+id/Translation"
@@ -10,8 +11,15 @@
         android:layout_height="wrap_content"
         android:ems="10"
         android:hint="Type text"
-        android:imeOptions="actionDone"
+        android:imeOptions="actionDone|flagNoExtractUi"
         android:inputType="textMultiLine"
         android:gravity="left"
         android:lines="3"/>
+
+    <TextView
+        android:id="@+id/editText"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:freezesText="true"/>
 </LinearLayout>
