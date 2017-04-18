@@ -6,6 +6,7 @@ Bottom navigation | :white_check_mark:
 Icons | :white_check_mark:
 3 Fragments | :white_check_mark:
 Multiple stacks of fragments | :white_check_mark:
+Done action button in keyboard | :white_check_mark:
 ... | ...
 Offline mode (like [Shazam offline](https://support.shazam.com/hc/en-us/articles/204457948-Offline-Shazaming-iPhone-)) | :x:
 
@@ -17,7 +18,7 @@ Offline mode (like [Shazam offline](https://support.shazam.com/hc/en-us/articles
   * [Bottom navigation design guidline](https://material.io/guidelines/components/bottom-navigation.html#)
   * [Post on Medium that has a step by step guide](https://medium.com/@hitherejoe/exploring-the-android-design-support-library-bottom-navigation-drawer-548de699e8e0),
   [GitHub sample](https://github.com/hitherejoe/BottomNavigationViewSample)
-* #### Fragments
+* #### Bottom navigation with fragments
   * [Stackoverflow answer](http://stackoverflow.com/a/40767419), [GitHub sample](https://github.com/1priyank1/BottomNavigation-Demo)
   * ![doge](https://cloud.githubusercontent.com/assets/296796/3511506/4042665c-06b0-11e4-953c-4f14c11f81ec.png)[Wow so much detailed post](https://appsandbiscuits.com/bottom-navigation-android-11-5c5a2d758681)
 * #### Multiple stack of fragments
@@ -26,3 +27,6 @@ Offline mode (like [Shazam offline](https://support.shazam.com/hc/en-us/articles
   * [Library for managing multiple stacks of fragments](https://github.com/ncapdevi/FragNav)
 * #### EditText with Done action button
   * [Stackoverflow answer about Multi-line EditText with Done action button which helped me after 2 unsuccessful hours trying to implement it](http://stackoverflow.com/a/41022589)
+* #### Save state after changing orientation 
+  * [Restoring state of TextView after screen rotation - SO](http://stackoverflow.com/a/6097177)
+  * [Save activity state on orientation change - SO](http://stackoverflow.com/a/32283912)
