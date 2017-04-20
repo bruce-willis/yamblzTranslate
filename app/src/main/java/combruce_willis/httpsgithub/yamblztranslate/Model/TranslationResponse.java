@@ -1,8 +1,9 @@
 package combruce_willis.httpsgithub.yamblztranslate.Model;
 
-import java.util.List;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
+
+import java.util.List;
 
 /**
  * Created by yury- on 4/20/2017.
@@ -45,5 +46,4 @@ public class TranslationResponse {
         public void setText(List<String> text) {
             this.text = text;
         }
-
 }

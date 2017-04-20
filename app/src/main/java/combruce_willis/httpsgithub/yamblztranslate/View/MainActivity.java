@@ -1,4 +1,4 @@
-package combruce_willis.httpsgithub.yamblztranslate;
+package combruce_willis.httpsgithub.yamblztranslate.View;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -9,8 +9,7 @@ import android.view.MenuItem;
 
 import com.ncapdevi.fragnav.FragNavController;
 
-import java.util.ArrayList;
-import java.util.List;
+import combruce_willis.httpsgithub.yamblztranslate.R;
 
 public class MainActivity extends AppCompatActivity implements FragNavController.RootFragmentListener  {
 
