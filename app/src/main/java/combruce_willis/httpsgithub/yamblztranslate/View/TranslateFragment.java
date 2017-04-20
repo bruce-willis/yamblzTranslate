@@ -2,9 +2,12 @@ package combruce_willis.httpsgithub.yamblztranslate.View;
 
 
 import android.content.Context;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.text.InputType;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -48,6 +51,8 @@ public class TranslateFragment extends Fragment implements TranslateMvpView, Tex
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view =  inflater.inflate(R.layout.fragment_translate, container, false);
+        Toolbar toolbar = (Toolbar) view.findViewById(R.id.language_toolbar);
+        ((AppCompatActivity)getActivity()).setSupportActionBar(toolbar);
         textView = (TextView) view.findViewById(R.id.editText);
         progressBar = (ProgressBar) view.findViewById(R.id.progressBar);
         editText = (EditText) view.findViewById(R.id.Translation);

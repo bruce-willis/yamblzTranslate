@@ -5,6 +5,8 @@
     tools:context="combruce_willis.httpsgithub.yamblztranslate.View.TranslateFragment"
     android:orientation="vertical">
 
+    <include layout="@layout/toolbar_translation"/>
+
     <EditText
         android:id="@+id/Translation"
         android:layout_width="match_parent"
