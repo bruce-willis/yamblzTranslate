@@ -52,6 +52,7 @@ public class MainActivity extends AppCompatActivity implements FragNavController
         fragNavController.switchTab(TAB_TRANSLATE);
 
         BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
+        navigation.setSelectedItemId(R.id.navigation_translate);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
     }
 

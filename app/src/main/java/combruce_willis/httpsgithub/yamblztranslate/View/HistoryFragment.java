@@ -1,8 +1,11 @@
 package combruce_willis.httpsgithub.yamblztranslate.View;
 
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -33,7 +36,12 @@ public class HistoryFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         setHasOptionsMenu(true);
-        return inflater.inflate(R.layout.fragment_history, container, false);
+        View view =  inflater.inflate(R.layout.fragment_history, container, false);
+        Toolbar toolbar = (Toolbar) view.findViewById(R.id.my_toolbar);
+        toolbar.setTitle(R.string.title_history);
+        toolbar.setTitleTextColor(Color.WHITE);
+        ((AppCompatActivity)getActivity()).setSupportActionBar(toolbar);
+        return view;
     }
 
 }
