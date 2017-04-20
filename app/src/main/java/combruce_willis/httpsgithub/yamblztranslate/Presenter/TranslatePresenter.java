@@ -14,8 +14,6 @@ import rx.android.schedulers.AndroidSchedulers;
 
 public class TranslatePresenter implements Presenter<TranslateMvpView> {
 
-    public static String TAG = "TranslatePresenter";
-
     private TranslateMvpView translateMvpView;
     private Subscription subscription;
     private TranslationResponse translationResponse;
@@ -35,7 +33,7 @@ public class TranslatePresenter implements Presenter<TranslateMvpView> {
         String text = textEntered.trim();
         if (text.isEmpty()) return;
 
-       // TranslateMvpView.
+        translateMvpView.showProgressIndicator();
 
         YamblzTranslate application = YamblzTranslate.get(translateMvpView.getContext());
         TranslateService translateService = application.getTranslateService();
@@ -46,7 +44,7 @@ public class TranslatePresenter implements Presenter<TranslateMvpView> {
                     @Override
                     public void onCompleted() {
                         if (translationResponse != null) translateMvpView.showTranslation(translationResponse);
-                        else translateMvpView.showMessage("FUCK U!!!");
+                        else translateMvpView.showMessage("Something go wrong");
                     }
 
                     @Override

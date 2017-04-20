@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -29,6 +30,7 @@ public class TranslateFragment extends Fragment implements TranslateMvpView, Tex
 
     private TextView textView;
     private EditText editText;
+    private ProgressBar progressBar;
 
     public TranslateFragment() {
         // Required empty public constructor
@@ -41,14 +43,13 @@ public class TranslateFragment extends Fragment implements TranslateMvpView, Tex
         presenter.attachView(this);
     }
 
-
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view =  inflater.inflate(R.layout.fragment_translate, container, false);
         textView = (TextView) view.findViewById(R.id.editText);
+        progressBar = (ProgressBar) view.findViewById(R.id.progressBar);
         editText = (EditText) view.findViewById(R.id.Translation);
         editText.setRawInputType(InputType.TYPE_CLASS_TEXT);
         editText.setOnEditorActionListener(this);
@@ -80,11 +81,14 @@ public class TranslateFragment extends Fragment implements TranslateMvpView, Tex
 
     @Override
     public void showProgressIndicator() {
-
+        progressBar.setVisibility(View.VISIBLE);
+        textView.setVisibility(View.GONE);
     }
 
     @Override
     public void showTranslation(TranslationResponse translationResponse) {
+        progressBar.setVisibility(View.GONE);
+        textView.setVisibility(View.VISIBLE);
         textView.setText(translationResponse.getText().get(0));
     }
 
