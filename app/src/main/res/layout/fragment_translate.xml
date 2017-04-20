@@ -2,7 +2,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="combruce_willis.httpsgithub.yamblztranslate.TranslateFragment"
+    tools:context="combruce_willis.httpsgithub.yamblztranslate.View.TranslateFragment"
     android:orientation="vertical">
 
     <EditText
@@ -10,11 +10,18 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
-        android:hint="Type text"
+        android:hint="@string/Hint"
         android:imeOptions="actionDone|flagNoExtractUi"
         android:inputType="textMultiLine"
         android:gravity="left"
         android:lines="3"/>
+
+    <ProgressBar
+        android:id="@+id/progressBar"
+        style="?android:attr/progressBarStyle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone"/>
 
     <TextView
         android:id="@+id/editText"
