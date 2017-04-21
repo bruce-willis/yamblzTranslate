@@ -10,8 +10,9 @@ import android.view.MenuItem;
 import com.ncapdevi.fragnav.FragNavController;
 
 import combruce_willis.httpsgithub.yamblztranslate.R;
+import combruce_willis.httpsgithub.yamblztranslate.View.dummy.DummyContent;
 
-public class MainActivity extends AppCompatActivity implements FragNavController.RootFragmentListener  {
+public class MainActivity extends AppCompatActivity implements TranslateFragment.FragmentNavigation, FragNavController.RootFragmentListener, LanguageFragment.OnListFragmentInteractionListener  {
 
     private FragNavController fragNavController;
 
@@ -64,5 +65,17 @@ public class MainActivity extends AppCompatActivity implements FragNavController
             case TAB_FAVORITE: return new FavoriteFragment();
         }
         throw new IllegalStateException("Need to send known index");
+    }
+
+    @Override
+    public void pushFragment(Fragment fragment) {
+        if (fragNavController != null) {
+            fragNavController.pushFragment(fragment);
+        }
+    }
+
+    @Override
+    public void onListFragmentInteraction(DummyContent.DummyItem item) {
+
     }
 }

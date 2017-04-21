@@ -40,9 +40,18 @@ public class TranslateFragment extends Fragment implements TranslateMvpView, Tex
     private TextView textView;
     private EditText editText;
     private ProgressBar progressBar;
+    FragmentNavigation fragmentNavigation;
 
     public TranslateFragment() {
         // Required empty public constructor
+    }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        if (context instanceof FragmentNavigation) {
+            fragmentNavigation = (FragmentNavigation) context;
+        }
     }
 
     @Override
@@ -67,24 +76,19 @@ public class TranslateFragment extends Fragment implements TranslateMvpView, Tex
         return view;
     }
 
-    private class Lang {
-        private List<String> dirs;
-        private Map<String, String> langs;
-    }
-
     @Override
     public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
         if (actionId == EditorInfo.IME_ACTION_DONE)
         {
             presenter.Languages("en");
+            if (fragmentNavigation != null)
+                fragmentNavigation.pushFragment(new LanguageFragment());
            // presenter.Translate(editText.getText().toString(), "ru");
         }
         return false;
     }
 
     //TranslateMvpView interface methods implementation
-
-
     @Override
     public void onDestroy() {
         presenter.detachView();
@@ -120,5 +124,9 @@ public class TranslateFragment extends Fragment implements TranslateMvpView, Tex
     public void showMessage(String message) {
         progressBar.setVisibility(View.GONE);
         Toast.makeText(getActivity(), message, Toast.LENGTH_SHORT).show();
+    }
+
+    public interface FragmentNavigation {
+        public void pushFragment(Fragment fragment);
     }
 }
