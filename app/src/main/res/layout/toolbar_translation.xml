@@ -22,6 +22,7 @@
             android:layout_toLeftOf="@+id/swap_languages"
             android:layout_marginRight="@dimen/toolbar_image_margin"
             android:text="English"
+            android:freezesText="true"
             style="@style/TextAppearance.AppCompat.Widget.ActionBar.Title"
             android:textColor="@android:color/white"/>
 
@@ -35,13 +36,14 @@
             android:background="@android:color/transparent"/>
 
         <TextView
-            android:id="@+id/language_destination"
+            android:id="@+id/language_target"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:layout_toRightOf="@+id/swap_languages"
             android:layout_marginLeft="@dimen/toolbar_image_margin"
             android:text="Russian"
+            android:freezesText="true"
             style="@style/TextAppearance.AppCompat.Widget.ActionBar.Title"
             android:textColor="@android:color/white"/>
 

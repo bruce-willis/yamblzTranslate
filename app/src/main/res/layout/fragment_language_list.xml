@@ -14,6 +14,7 @@
     android:layout_height="match_parent"
     android:layout_marginLeft="16dp"
     android:layout_marginRight="16dp"
+    android:paddingTop="?attr/actionBarSize"
     app:layoutManager="LinearLayoutManager"
     tools:context="combruce_willis.httpsgithub.yamblztranslate.View.LanguageFragment"
     tools:listitem="@layout/fragment_language" />

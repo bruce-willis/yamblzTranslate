@@ -2,7 +2,6 @@ package combruce_willis.httpsgithub.yamblztranslate.View;
 
 
 import android.content.Context;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -15,14 +14,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import com.google.gson.Gson;
-
-import java.util.List;
-import java.util.Map;
 
 import combruce_willis.httpsgithub.yamblztranslate.Model.LanguagesList;
 import combruce_willis.httpsgithub.yamblztranslate.Model.TranslationResponse;
@@ -39,6 +34,9 @@ public class TranslateFragment extends Fragment implements TranslateMvpView, Tex
 
     private TextView textView;
     private EditText editText;
+    private TextView languageSource;
+    private TextView languageTarget;
+    private ImageButton swapLanguagesButton;
     private ProgressBar progressBar;
     FragmentNavigation fragmentNavigation;
 
@@ -66,13 +64,48 @@ public class TranslateFragment extends Fragment implements TranslateMvpView, Tex
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view =  inflater.inflate(R.layout.fragment_translate, container, false);
+
         Toolbar toolbar = (Toolbar) view.findViewById(R.id.language_toolbar);
         ((AppCompatActivity)getActivity()).setSupportActionBar(toolbar);
+
+        languageSource = (TextView) view.findViewById(R.id.language_source);
+        languageSource.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (fragmentNavigation != null)
+                    fragmentNavigation.pushFragment(new LanguageFragment());
+            }
+        });
+
+        languageTarget = (TextView) view.findViewById(R.id.language_target);
+        languageTarget.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (fragmentNavigation != null)
+                    fragmentNavigation.pushFragment(new LanguageFragment());
+            }
+        });
+
+        swapLanguagesButton = (ImageButton) view.findViewById(R.id.swap_languages);
+        swapLanguagesButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String temp = languageSource.getText().toString();
+                languageSource.setText(languageTarget.getText());
+                languageTarget.setText(temp);
+            }
+        });
+
+
+
         textView = (TextView) view.findViewById(R.id.editText);
+
         progressBar = (ProgressBar) view.findViewById(R.id.progressBar);
+
         editText = (EditText) view.findViewById(R.id.Translation);
         editText.setRawInputType(InputType.TYPE_CLASS_TEXT);
         editText.setOnEditorActionListener(this);
+
         return view;
     }
 
@@ -81,8 +114,6 @@ public class TranslateFragment extends Fragment implements TranslateMvpView, Tex
         if (actionId == EditorInfo.IME_ACTION_DONE)
         {
             presenter.Languages("en");
-            if (fragmentNavigation != null)
-                fragmentNavigation.pushFragment(new LanguageFragment());
            // presenter.Translate(editText.getText().toString(), "ru");
         }
         return false;
