@@ -1,5 +1,6 @@
 package combruce_willis.httpsgithub.yamblztranslate.Presenter;
 
+import combruce_willis.httpsgithub.yamblztranslate.Model.LanguagesList;
 import combruce_willis.httpsgithub.yamblztranslate.Model.TranslateService;
 import combruce_willis.httpsgithub.yamblztranslate.Model.TranslationResponse;
 import combruce_willis.httpsgithub.yamblztranslate.View.TranslateMvpView;
@@ -17,6 +18,7 @@ public class TranslatePresenter implements Presenter<TranslateMvpView> {
     private TranslateMvpView translateMvpView;
     private Subscription subscription;
     private TranslationResponse translationResponse;
+    private LanguagesList languagesList;
 
     @Override
     public void attachView(TranslateMvpView view) {
@@ -58,5 +60,33 @@ public class TranslatePresenter implements Presenter<TranslateMvpView> {
                     }
                 });
 
+    }
+
+    public void Languages(String user_interface)
+    {
+        translateMvpView.showProgressIndicator();
+
+        YamblzTranslate application = YamblzTranslate.get(translateMvpView.getContext());
+        TranslateService translateService = application.getTranslateService();
+        subscription = translateService.getLanguages(user_interface)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(application.defaultSubscribeScheduler())
+                .subscribe(new Subscriber<LanguagesList>() {
+                    @Override
+                    public void onCompleted() {
+                        if (languagesList != null) translateMvpView.showLanguages(languagesList);
+                        else translateMvpView.showMessage("Something go wrong");
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        translateMvpView.showMessage("Ooops " + e.getMessage());
+                    }
+
+                    @Override
+                    public void onNext(LanguagesList languagesList) {
+                        TranslatePresenter.this.languagesList = languagesList;
+                    }
+                });
     }
 }

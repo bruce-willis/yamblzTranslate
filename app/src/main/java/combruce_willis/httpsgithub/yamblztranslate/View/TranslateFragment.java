@@ -19,6 +19,12 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
+
+import java.util.List;
+import java.util.Map;
+
+import combruce_willis.httpsgithub.yamblztranslate.Model.LanguagesList;
 import combruce_willis.httpsgithub.yamblztranslate.Model.TranslationResponse;
 import combruce_willis.httpsgithub.yamblztranslate.Presenter.TranslatePresenter;
 import combruce_willis.httpsgithub.yamblztranslate.R;
@@ -61,11 +67,17 @@ public class TranslateFragment extends Fragment implements TranslateMvpView, Tex
         return view;
     }
 
+    private class Lang {
+        private List<String> dirs;
+        private Map<String, String> langs;
+    }
+
     @Override
     public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
         if (actionId == EditorInfo.IME_ACTION_DONE)
         {
-            presenter.Translate(editText.getText().toString(), "ru");
+            presenter.Languages("en");
+           // presenter.Translate(editText.getText().toString(), "ru");
         }
         return false;
     }
@@ -98,7 +110,15 @@ public class TranslateFragment extends Fragment implements TranslateMvpView, Tex
     }
 
     @Override
+    public void showLanguages(LanguagesList languagesList) {
+        progressBar.setVisibility(View.GONE);
+        textView.setVisibility(View.VISIBLE);
+        textView.setText(languagesList.getLanguages().get("en"));
+    }
+
+    @Override
     public void showMessage(String message) {
+        progressBar.setVisibility(View.GONE);
         Toast.makeText(getActivity(), message, Toast.LENGTH_SHORT).show();
     }
 }
