@@ -1,12 +1,19 @@
 package combruce_willis.httpsgithub.yamblztranslate.View;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -61,17 +68,21 @@ public class LanguageFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_language_list, container, false);
 
+        Toolbar toolbar = (Toolbar) view.findViewById(R.id.history_toolbar);
+        toolbar.setTitle("Choose language");
+        toolbar.setTitleTextColor(Color.WHITE);
+        ((AppCompatActivity)getActivity()).setSupportActionBar(toolbar);
+        ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayShowHomeEnabled(true);
+
         // Set the adapter
-        if (view instanceof RecyclerView) {
-            Context context = view.getContext();
-            RecyclerView recyclerView = (RecyclerView) view;
-            if (mColumnCount <= 1) {
-                recyclerView.setLayoutManager(new LinearLayoutManager(context));
-            } else {
-                recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
-            }
-            recyclerView.setAdapter(new LanguageRecyclerViewAdapter(DummyContent.ITEMS, mListener));
+        RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.list);
+        if (mColumnCount <= 1) {
+            recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        } else {
+            recyclerView.setLayoutManager(new GridLayoutManager(getActivity(), mColumnCount));
         }
+        recyclerView.setAdapter(new LanguageRecyclerViewAdapter(DummyContent.ITEMS, mListener));
         return view;
     }
 

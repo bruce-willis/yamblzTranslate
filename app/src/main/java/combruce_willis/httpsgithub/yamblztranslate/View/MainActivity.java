@@ -75,6 +75,21 @@ public class MainActivity extends AppCompatActivity implements TranslateFragment
     }
 
     @Override
+    public void onBackPressed() {
+        if (!fragNavController.isRootFragment()) {
+            fragNavController.popFragment();
+        } else {
+            super.onBackPressed();
+        }
+    }
+
+    @Override
+    public boolean onSupportNavigateUp() {
+        onBackPressed();
+        return true;
+    }
+
+    @Override
     public void onListFragmentInteraction(DummyContent.DummyItem item) {
 
     }
