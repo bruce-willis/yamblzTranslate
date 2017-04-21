@@ -60,9 +60,9 @@ public class MainActivity extends AppCompatActivity implements TranslateFragment
     @Override
     public Fragment getRootFragment(int index) {
         switch (index) {
-            case TAB_TRANSLATE: return new TranslateFragment();
-            case TAB_HISTORY: return new HistoryFragment();
-            case TAB_FAVORITE: return new FavoriteFragment();
+            case TAB_TRANSLATE: return TranslateFragment.newInstance();
+            case TAB_HISTORY: return HistoryFragment.newInstance();
+            case TAB_FAVORITE: return FavoriteFragment.newInstance();
         }
         throw new IllegalStateException("Need to send known index");
     }

@@ -25,6 +25,10 @@ public class FavoriteFragment extends Fragment {
         // Required empty public constructor
     }
 
+    public static FavoriteFragment newInstance() {
+        return new FavoriteFragment();
+    }
+
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         inflater.inflate(R.menu.menu_items, menu);

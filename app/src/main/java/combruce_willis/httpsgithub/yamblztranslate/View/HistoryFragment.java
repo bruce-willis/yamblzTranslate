@@ -25,6 +25,10 @@ public class HistoryFragment extends Fragment {
         // Required empty public constructor
     }
 
+    public static HistoryFragment newInstance() {
+        return new HistoryFragment();
+    }
+
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         inflater.inflate(R.menu.menu_items, menu);

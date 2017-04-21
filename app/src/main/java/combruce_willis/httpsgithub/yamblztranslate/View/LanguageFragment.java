@@ -4,24 +4,17 @@ import android.content.Context;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
 import combruce_willis.httpsgithub.yamblztranslate.R;
 import combruce_willis.httpsgithub.yamblztranslate.View.dummy.DummyContent;
 import combruce_willis.httpsgithub.yamblztranslate.View.dummy.DummyContent.DummyItem;
-
-import java.util.List;
 
 /**
  * A fragment representing a list of Items.
@@ -31,25 +24,29 @@ import java.util.List;
  */
 public class LanguageFragment extends Fragment {
 
-    // TODO: Customize parameter argument names
-    private static final String ARG_COLUMN_COUNT = "column-count";
-    // TODO: Customize parameters
-    private int mColumnCount = 1;
+
+    private static final String ARG_LANGUAGE = "language";
+    /**
+     * 0 - source language
+     * 1 - target language
+    */
+    private int language = 0;
     private OnListFragmentInteractionListener mListener;
+
 
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the
      * fragment (e.g. upon screen orientation changes).
+
      */
     public LanguageFragment() {
     }
 
-    // TODO: Customize parameter initialization
-    @SuppressWarnings("unused")
-    public static LanguageFragment newInstance(int columnCount) {
+    public static LanguageFragment newInstance(int language)
+    {
         LanguageFragment fragment = new LanguageFragment();
         Bundle args = new Bundle();
-        args.putInt(ARG_COLUMN_COUNT, columnCount);
+        args.putInt(ARG_LANGUAGE, language);
         fragment.setArguments(args);
         return fragment;
     }
@@ -57,9 +54,8 @@ public class LanguageFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         if (getArguments() != null) {
-            mColumnCount = getArguments().getInt(ARG_COLUMN_COUNT);
+            language = getArguments().getInt(ARG_LANGUAGE);
         }
     }
 
@@ -69,19 +65,16 @@ public class LanguageFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_language_list, container, false);
 
         Toolbar toolbar = (Toolbar) view.findViewById(R.id.history_toolbar);
-        toolbar.setTitle("Choose language");
+        if (language == 0) toolbar.setTitle(R.string.source_language);
+        else toolbar.setTitle(R.string.target_language);
         toolbar.setTitleTextColor(Color.WHITE);
-        ((AppCompatActivity)getActivity()).setSupportActionBar(toolbar);
+        ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
         ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayShowHomeEnabled(true);
 
         // Set the adapter
         RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.list);
-        if (mColumnCount <= 1) {
-            recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        } else {
-            recyclerView.setLayoutManager(new GridLayoutManager(getActivity(), mColumnCount));
-        }
+        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         recyclerView.setAdapter(new LanguageRecyclerViewAdapter(DummyContent.ITEMS, mListener));
         return view;
     }

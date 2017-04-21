@@ -44,6 +44,10 @@ public class TranslateFragment extends Fragment implements TranslateMvpView, Tex
         // Required empty public constructor
     }
 
+    public static TranslateFragment newInstance() {
+        return new TranslateFragment();
+    }
+
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
@@ -73,7 +77,7 @@ public class TranslateFragment extends Fragment implements TranslateMvpView, Tex
             @Override
             public void onClick(View v) {
                 if (fragmentNavigation != null)
-                    fragmentNavigation.pushFragment(new LanguageFragment());
+                    fragmentNavigation.pushFragment(LanguageFragment.newInstance(0));
             }
         });
 
@@ -82,7 +86,7 @@ public class TranslateFragment extends Fragment implements TranslateMvpView, Tex
             @Override
             public void onClick(View v) {
                 if (fragmentNavigation != null)
-                    fragmentNavigation.pushFragment(new LanguageFragment());
+                    fragmentNavigation.pushFragment(LanguageFragment.newInstance(1));
             }
         });
 
