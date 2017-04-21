@@ -37,7 +37,7 @@ public class FavoriteFragment extends Fragment {
         // Inflate the layout for this fragment
         setHasOptionsMenu(true);
         View view =  inflater.inflate(R.layout.fragment_history, container, false);
-        Toolbar toolbar = (Toolbar) view.findViewById(R.id.my_toolbar);
+        Toolbar toolbar = (Toolbar) view.findViewById(R.id.history_toolbar);
         toolbar.setTitle(R.string.title_favorites);
         toolbar.setTitleTextColor(Color.WHITE);
         ((AppCompatActivity)getActivity()).setSupportActionBar(toolbar);
