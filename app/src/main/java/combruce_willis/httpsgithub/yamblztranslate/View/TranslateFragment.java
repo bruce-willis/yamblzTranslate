@@ -28,7 +28,7 @@ import combruce_willis.httpsgithub.yamblztranslate.R;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class TranslateFragment extends Fragment implements TranslateMvpView, TextView.OnEditorActionListener {
+public class TranslateFragment extends Fragment implements TranslateMvpView{
 
     private TranslatePresenter presenter;
 
@@ -67,10 +67,10 @@ public class TranslateFragment extends Fragment implements TranslateMvpView, Tex
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view =  inflater.inflate(R.layout.fragment_translate, container, false);
+        View view = inflater.inflate(R.layout.fragment_translate, container, false);
 
         Toolbar toolbar = (Toolbar) view.findViewById(R.id.language_toolbar);
-        ((AppCompatActivity)getActivity()).setSupportActionBar(toolbar);
+        ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
 
         languageSource = (TextView) view.findViewById(R.id.language_source);
         languageSource.setOnClickListener(new View.OnClickListener() {
@@ -101,26 +101,23 @@ public class TranslateFragment extends Fragment implements TranslateMvpView, Tex
         });
 
 
-
         textView = (TextView) view.findViewById(R.id.editText);
 
         progressBar = (ProgressBar) view.findViewById(R.id.progressBar);
 
         editText = (EditText) view.findViewById(R.id.Translation);
         editText.setRawInputType(InputType.TYPE_CLASS_TEXT);
-        editText.setOnEditorActionListener(this);
+        editText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                if (actionId == EditorInfo.IME_ACTION_DONE) {
+                    presenter.Translate(editText.getText().toString(), "ru");
+                }
+                return false;
+            }
+        });
 
         return view;
-    }
-
-    @Override
-    public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-        if (actionId == EditorInfo.IME_ACTION_DONE)
-        {
-            presenter.Languages("en");
-           // presenter.Translate(editText.getText().toString(), "ru");
-        }
-        return false;
     }
 
     //TranslateMvpView interface methods implementation
@@ -149,19 +146,12 @@ public class TranslateFragment extends Fragment implements TranslateMvpView, Tex
     }
 
     @Override
-    public void showLanguages(LanguagesList languagesList) {
-        progressBar.setVisibility(View.GONE);
-        textView.setVisibility(View.VISIBLE);
-        textView.setText(languagesList.getLanguages().get("en"));
-    }
-
-    @Override
     public void showMessage(String message) {
         progressBar.setVisibility(View.GONE);
         Toast.makeText(getActivity(), message, Toast.LENGTH_SHORT).show();
     }
 
     public interface FragmentNavigation {
-        public void pushFragment(Fragment fragment);
+        void pushFragment(Fragment fragment);
     }
 }

@@ -9,4 +9,6 @@ import android.content.Context;
 public interface MvpView {
 
     Context getContext();
+
+    void showMessage(String message);
 }

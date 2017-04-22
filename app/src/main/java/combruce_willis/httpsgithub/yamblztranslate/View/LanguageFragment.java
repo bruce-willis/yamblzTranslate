@@ -11,7 +11,10 @@ import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
+import combruce_willis.httpsgithub.yamblztranslate.Model.LanguagesList;
+import combruce_willis.httpsgithub.yamblztranslate.Presenter.LanguagesPresenter;
 import combruce_willis.httpsgithub.yamblztranslate.R;
 import combruce_willis.httpsgithub.yamblztranslate.View.dummy.DummyContent;
 import combruce_willis.httpsgithub.yamblztranslate.View.dummy.DummyContent.DummyItem;
@@ -22,7 +25,7 @@ import combruce_willis.httpsgithub.yamblztranslate.View.dummy.DummyContent.Dummy
  * Activities containing this fragment MUST implement the {@link OnListFragmentInteractionListener}
  * interface.
  */
-public class LanguageFragment extends Fragment {
+public class LanguageFragment extends Fragment implements LanguagesMvpView {
 
 
     private static final String ARG_LANGUAGE = "language";
@@ -31,6 +34,7 @@ public class LanguageFragment extends Fragment {
      * 1 - target language
     */
     private int language = 0;
+    private LanguagesPresenter presenter;
     private OnListFragmentInteractionListener mListener;
 
 
@@ -54,6 +58,8 @@ public class LanguageFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        presenter = new LanguagesPresenter();
+        presenter.attachView(this);
         if (getArguments() != null) {
             language = getArguments().getInt(ARG_LANGUAGE);
         }
@@ -95,6 +101,28 @@ public class LanguageFragment extends Fragment {
     public void onDetach() {
         super.onDetach();
         mListener = null;
+    }
+
+    //LanguagesMvpView interface methods implementation
+    @Override
+    public void onDestroy() {
+        presenter.detachView();
+        super.onDestroy();
+    }
+
+    @Override
+    public Context getContext() {
+        return getActivity();
+    }
+
+    @Override
+    public void showMessage(String message) {
+        Toast.makeText(getActivity(), message, Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void showLanguages(LanguagesList languages) {
+
     }
 
     /**

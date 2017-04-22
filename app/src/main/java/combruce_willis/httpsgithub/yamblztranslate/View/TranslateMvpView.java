@@ -9,11 +9,8 @@ import combruce_willis.httpsgithub.yamblztranslate.Model.TranslationResponse;
 
 public interface TranslateMvpView extends MvpView {
 
-    void showProgressIndicator();
-
     void showTranslation(TranslationResponse translationResponse);
 
-    void showLanguages(LanguagesList languagesList);
+    void showProgressIndicator();
 
-    void showMessage(String message);
 }
