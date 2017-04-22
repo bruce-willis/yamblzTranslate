@@ -1,78 +1,80 @@
 package combruce_willis.httpsgithub.yamblztranslate.View;
 
+import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import combruce_willis.httpsgithub.yamblztranslate.R;
-import combruce_willis.httpsgithub.yamblztranslate.View.LanguageFragment.OnListFragmentInteractionListener;
-import combruce_willis.httpsgithub.yamblztranslate.View.dummy.DummyContent.DummyItem;
-
+import java.util.Collections;
 import java.util.List;
 
-/**
- * {@link RecyclerView.Adapter} that can display a {@link DummyItem} and makes a call to the
- * specified {@link OnListFragmentInteractionListener}.
- * TODO: Replace the implementation with code for your data type.
- */
+import combruce_willis.httpsgithub.yamblztranslate.R;
+
 public class LanguageRecyclerViewAdapter extends RecyclerView.Adapter<LanguageRecyclerViewAdapter.ViewHolder> {
 
-    private final List<DummyItem> mValues;
-    private final OnListFragmentInteractionListener mListener;
+    private List<String> languages;
+    private Callback callback;
 
-    public LanguageRecyclerViewAdapter(List<DummyItem> items, OnListFragmentInteractionListener listener) {
-        mValues = items;
-        mListener = listener;
+    public LanguageRecyclerViewAdapter() {
+        this.languages = Collections.emptyList();
+    }
+
+    public LanguageRecyclerViewAdapter(List<String> languages) {
+        this.languages = languages;
+    }
+
+    public void setLanguages(List<String> languages) {
+        this.languages = languages;
+    }
+
+    public void setCallback(Callback callback) {
+        this.callback = callback;
     }
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext())
+        final View view = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.fragment_language, parent, false);
-        return new ViewHolder(view);
+        final ViewHolder viewHolder = new ViewHolder(view);
+        viewHolder.contentLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (callback != null) {
+                    callback.onItemClick(viewHolder.language);
+                }
+            }
+        });
+        return viewHolder;
     }
 
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
-        holder.mItem = mValues.get(position);
-        holder.mIdView.setText(mValues.get(position).id);
-        holder.mContentView.setText(mValues.get(position).content);
-
-        holder.mView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (null != mListener) {
-                    // Notify the active callbacks interface (the activity, if the
-                    // fragment is attached to one) that an item has been selected.
-                    mListener.onListFragmentInteraction(holder.mItem);
-                }
-            }
-        });
+        String language = languages.get(position);
+        Context context = holder.languageTextView.getContext();
+        holder.language = language;
+        holder.languageTextView.setText(language);
     }
 
     @Override
     public int getItemCount() {
-        return mValues.size();
+        return languages.size();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        public final View mView;
-        public final TextView mIdView;
-        public final TextView mContentView;
-        public DummyItem mItem;
+        public View contentLayout;
+        public TextView languageTextView;
+        public String language;
 
         public ViewHolder(View view) {
             super(view);
-            mView = view;
-            mIdView = (TextView) view.findViewById(R.id.id);
-            mContentView = (TextView) view.findViewById(R.id.content);
+            contentLayout = view;
+            languageTextView = (TextView) view.findViewById(R.id.text_language);
         }
+    }
 
-        @Override
-        public String toString() {
-            return super.toString() + " '" + mContentView.getText() + "'";
-        }
+    public interface Callback {
+        void onItemClick(String language);
     }
 }

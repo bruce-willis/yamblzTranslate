@@ -8,7 +8,7 @@
 <android.support.v7.widget.RecyclerView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/list"
+    android:id="@+id/languages_recycler_view"
     android:name="combruce_willis.httpsgithub.yamblztranslate.View.LanguageFragment"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -17,6 +17,7 @@
     android:paddingTop="?attr/actionBarSize"
     app:layoutManager="LinearLayoutManager"
     tools:context="combruce_willis.httpsgithub.yamblztranslate.View.LanguageFragment"
+    android:visibility="gone"
     tools:listitem="@layout/fragment_language" />
 
     <include layout="@layout/toolbar_history"/>
