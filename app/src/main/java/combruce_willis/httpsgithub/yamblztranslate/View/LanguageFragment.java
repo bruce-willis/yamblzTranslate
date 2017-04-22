@@ -15,6 +15,7 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 import combruce_willis.httpsgithub.yamblztranslate.Model.LanguagesList;
 import combruce_willis.httpsgithub.yamblztranslate.Presenter.LanguagesPresenter;
@@ -84,16 +85,41 @@ public class LanguageFragment extends Fragment implements LanguagesMvpView {
         // Set the adapter
         LanguageRecyclerViewAdapter adapter = new LanguageRecyclerViewAdapter();
         adapter.setCallback(new LanguageRecyclerViewAdapter.Callback() {
+            private void swapLanguages(SharedPreferences sharedPreferences, SharedPreferences.Editor editor) {
+                String languageSourceFull = sharedPreferences.getString(getString(R.string.saved_source_language_full), "English");
+                String languageSourceCode = sharedPreferences.getString(getString(R.string.saved_source_language_code), "en");
+                String languageTargetFull = sharedPreferences.getString(getString(R.string.saved_target_language_full), "Russian");
+                String languageTargetCode = sharedPreferences.getString(getString(R.string.saved_target_language_code), "ru");
+
+                String tempLanguage = languageSourceFull;
+                editor.putString(getString(R.string.saved_source_language_full), languageTargetFull);
+                editor.putString(getString(R.string.saved_target_language_full), tempLanguage);
+
+                String tempLanguageCode = languageSourceCode;
+                editor.putString(getString(R.string.saved_source_language_code), languageTargetCode);
+                editor.putString(getString(R.string.saved_target_language_code), tempLanguageCode);
+            }
             @Override
             public void onItemClick(String language, String languageCode, int languageType) {
-                SharedPreferences.Editor editor = getActivity().getPreferences(Context.MODE_PRIVATE).edit();
+                SharedPreferences sharedPreferences = getActivity().getPreferences(Context.MODE_PRIVATE);
+                SharedPreferences.Editor editor = sharedPreferences.edit();
                 if (languageType == 0) {
-                    editor.putString(getString(R.string.saved_source_language_code),languageCode);
-                    editor.putString(getString(R.string.saved_source_language_full), language);
+                    String languageTargetFull = sharedPreferences.getString(getString(R.string.saved_target_language_full), "Russian");
+                    if (language.equals(languageTargetFull))
+                        swapLanguages(sharedPreferences, editor);
+                    else {
+                        editor.putString(getString(R.string.saved_source_language_code), languageCode);
+                        editor.putString(getString(R.string.saved_source_language_full), language);
+                    }
                 }
                 else {
-                    editor.putString(getString(R.string.saved_target_language_code), languageCode);
-                    editor.putString(getString(R.string.saved_target_language_full), language);
+                    String languageSourceFull = sharedPreferences.getString(getString(R.string.saved_source_language_full), "English");
+                    if (language.equals(languageSourceFull))
+                        swapLanguages(sharedPreferences, editor);
+                    else {
+                        editor.putString(getString(R.string.saved_target_language_code), languageCode);
+                        editor.putString(getString(R.string.saved_target_language_full), language);
+                    }
                 }
                 editor.apply();
                 getActivity().onBackPressed();
@@ -124,7 +150,9 @@ public class LanguageFragment extends Fragment implements LanguagesMvpView {
     @Override
     public void showLanguages(LanguagesList languages) {
         LanguageRecyclerViewAdapter adapter = (LanguageRecyclerViewAdapter) languagesRecyclerView.getAdapter();
-        adapter.setLanguages(new ArrayList<>(languages.getLanguages().values()));
+        ArrayList<String> list = new ArrayList<>(languages.getLanguages().values());
+        Collections.sort(list, String.CASE_INSENSITIVE_ORDER);
+        adapter.setLanguages(list);
         adapter.setLanguageType(this.languageType);
         adapter.setLanguagesWithCode(languages.getLanguages()); //TODO simplify this!!!
         adapter.notifyDataSetChanged();
