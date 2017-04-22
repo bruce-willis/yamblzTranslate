@@ -4,4 +4,10 @@
     <string name="title_favorites">Favorites</string>
     <string name="title_history">Recents</string>
     <string name="Hint">Type text</string>
+    <string name="source_language">Source language</string>
+    <string name="target_language">Target language</string>
+    <string name="saved_source_language_code">Saved source language code</string>
+    <string name="saved_source_language_full">Saved source language full</string>
+    <string name="saved_target_language_code">Saved target language code</string>
+    <string name="saved_target_language_full">Saved target language full</string>
 </resources>

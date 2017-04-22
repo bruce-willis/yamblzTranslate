@@ -11,7 +11,7 @@ import com.ncapdevi.fragnav.FragNavController;
 
 import combruce_willis.httpsgithub.yamblztranslate.R;
 
-public class MainActivity extends AppCompatActivity implements FragNavController.RootFragmentListener  {
+public class MainActivity extends AppCompatActivity implements TranslateFragment.FragmentNavigation, FragNavController.RootFragmentListener {
 
     private FragNavController fragNavController;
 
@@ -52,16 +52,39 @@ public class MainActivity extends AppCompatActivity implements FragNavController
         fragNavController.switchTab(TAB_TRANSLATE);
 
         BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
+        navigation.setSelectedItemId(R.id.navigation_translate);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
     }
 
     @Override
     public Fragment getRootFragment(int index) {
         switch (index) {
-            case TAB_TRANSLATE: return new TranslateFragment();
-            case TAB_HISTORY: return new HistoryFragment();
-            case TAB_FAVORITE: return new FavoriteFragment();
+            case TAB_TRANSLATE: return TranslateFragment.newInstance();
+            case TAB_HISTORY: return HistoryFragment.newInstance();
+            case TAB_FAVORITE: return FavoriteFragment.newInstance();
         }
         throw new IllegalStateException("Need to send known index");
+    }
+
+    @Override
+    public void pushFragment(Fragment fragment) {
+        if (fragNavController != null) {
+            fragNavController.pushFragment(fragment);
+        }
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (!fragNavController.isRootFragment()) {
+            fragNavController.popFragment();
+        } else {
+            super.onBackPressed();
+        }
+    }
+
+    @Override
+    public boolean onSupportNavigateUp() {
+        onBackPressed();
+        return true;
     }
 }

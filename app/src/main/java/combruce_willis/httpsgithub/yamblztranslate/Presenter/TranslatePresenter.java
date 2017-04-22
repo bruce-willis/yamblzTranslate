@@ -1,5 +1,6 @@
 package combruce_willis.httpsgithub.yamblztranslate.Presenter;
 
+import combruce_willis.httpsgithub.yamblztranslate.Model.LanguagesList;
 import combruce_willis.httpsgithub.yamblztranslate.Model.TranslateService;
 import combruce_willis.httpsgithub.yamblztranslate.Model.TranslationResponse;
 import combruce_willis.httpsgithub.yamblztranslate.View.TranslateMvpView;
@@ -35,6 +36,8 @@ public class TranslatePresenter implements Presenter<TranslateMvpView> {
 
         translateMvpView.showProgressIndicator();
 
+        if (subscription != null) subscription.unsubscribe();
+
         YamblzTranslate application = YamblzTranslate.get(translateMvpView.getContext());
         TranslateService translateService = application.getTranslateService();
         subscription = translateService.getTranslation(text, language)
@@ -59,4 +62,5 @@ public class TranslatePresenter implements Presenter<TranslateMvpView> {
                 });
 
     }
+
 }

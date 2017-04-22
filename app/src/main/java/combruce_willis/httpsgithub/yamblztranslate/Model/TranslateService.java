@@ -1,8 +1,5 @@
 package combruce_willis.httpsgithub.yamblztranslate.Model;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
@@ -21,6 +18,9 @@ public interface TranslateService {
 
     @GET("translate?key=" + API_KEY)
     Observable<TranslationResponse> getTranslation(@Query("text") String text, @Query("lang") String language);
+
+    @GET("getLangs?key=" + API_KEY)
+    Observable<LanguagesList> getLanguages(@Query("ui") String user_interface);
 
     class Factory{
         public static TranslateService create() {
