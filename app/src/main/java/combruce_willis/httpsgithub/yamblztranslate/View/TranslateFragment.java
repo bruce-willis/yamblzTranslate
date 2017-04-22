@@ -2,6 +2,7 @@ package combruce_willis.httpsgithub.yamblztranslate.View;
 
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -19,7 +20,6 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import combruce_willis.httpsgithub.yamblztranslate.Model.LanguagesList;
 import combruce_willis.httpsgithub.yamblztranslate.Model.TranslationResponse;
 import combruce_willis.httpsgithub.yamblztranslate.Presenter.TranslatePresenter;
 import combruce_willis.httpsgithub.yamblztranslate.R;
@@ -32,10 +32,15 @@ public class TranslateFragment extends Fragment implements TranslateMvpView{
 
     private TranslatePresenter presenter;
 
-    private TextView textView;
+    private TextView translationTextView;
     private EditText editText;
-    private TextView languageSource;
-    private TextView languageTarget;
+    private TextView languageSourceTextView;
+    private String languageSourceFull;
+    private String languageSourceCode;
+    private TextView languageTargetTextView;
+    private String languageTargetFull;
+    private String languageTargetCode;
+    private SharedPreferences sharedPreferences;
     private ImageButton swapLanguagesButton;
     private ProgressBar progressBar;
     FragmentNavigation fragmentNavigation;
@@ -68,12 +73,11 @@ public class TranslateFragment extends Fragment implements TranslateMvpView{
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_translate, container, false);
-
         Toolbar toolbar = (Toolbar) view.findViewById(R.id.language_toolbar);
         ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
 
-        languageSource = (TextView) view.findViewById(R.id.language_source);
-        languageSource.setOnClickListener(new View.OnClickListener() {
+        languageSourceTextView = (TextView) view.findViewById(R.id.language_source);
+        languageSourceTextView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (fragmentNavigation != null)
@@ -81,8 +85,8 @@ public class TranslateFragment extends Fragment implements TranslateMvpView{
             }
         });
 
-        languageTarget = (TextView) view.findViewById(R.id.language_target);
-        languageTarget.setOnClickListener(new View.OnClickListener() {
+        languageTargetTextView = (TextView) view.findViewById(R.id.language_target);
+        languageTargetTextView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (fragmentNavigation != null)
@@ -90,18 +94,30 @@ public class TranslateFragment extends Fragment implements TranslateMvpView{
             }
         });
 
+        sharedPreferences  = getActivity().getPreferences(Context.MODE_PRIVATE);
+        updateTitle();
+
         swapLanguagesButton = (ImageButton) view.findViewById(R.id.swap_languages);
         swapLanguagesButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String temp = languageSource.getText().toString();
-                languageSource.setText(languageTarget.getText());
-                languageTarget.setText(temp);
+                SharedPreferences.Editor editor = sharedPreferences.edit();
+
+                String tempLanguage = languageSourceFull;
+                editor.putString(getString(R.string.saved_source_language_full), languageTargetFull);
+                editor.putString(getString(R.string.saved_target_language_full), tempLanguage);
+
+                String tempLanguageCode = languageSourceCode;
+                editor.putString(getString(R.string.saved_source_language_code), languageTargetCode);
+                editor.putString(getString(R.string.saved_target_language_code), tempLanguageCode);
+
+                editor.apply();
+
+                updateTitle();
             }
         });
 
-
-        textView = (TextView) view.findViewById(R.id.editText);
+        translationTextView = (TextView) view.findViewById(R.id.editText);
 
         progressBar = (ProgressBar) view.findViewById(R.id.progressBar);
 
@@ -111,13 +127,22 @@ public class TranslateFragment extends Fragment implements TranslateMvpView{
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
                 if (actionId == EditorInfo.IME_ACTION_DONE) {
-                    presenter.Translate(editText.getText().toString(), "ru");
+                   presenter.Translate(editText.getText().toString(), languageSourceCode + "-" + languageTargetCode);
                 }
                 return false;
             }
         });
 
         return view;
+    }
+
+    private void updateTitle(){
+        languageSourceFull = sharedPreferences.getString(getString(R.string.saved_source_language_full), "English");
+        languageSourceCode = sharedPreferences.getString(getString(R.string.saved_source_language_code), "en");
+        languageTargetFull = sharedPreferences.getString(getString(R.string.saved_target_language_full), "Russian");
+        languageTargetCode = sharedPreferences.getString(getString(R.string.saved_target_language_code), "ru");
+        languageSourceTextView.setText(languageSourceFull);
+        languageTargetTextView.setText(languageTargetFull);
     }
 
     //TranslateMvpView interface methods implementation
@@ -135,14 +160,14 @@ public class TranslateFragment extends Fragment implements TranslateMvpView{
     @Override
     public void showProgressIndicator() {
         progressBar.setVisibility(View.VISIBLE);
-        textView.setVisibility(View.GONE);
+        translationTextView.setVisibility(View.GONE);
     }
 
     @Override
     public void showTranslation(TranslationResponse translationResponse) {
         progressBar.setVisibility(View.GONE);
-        textView.setVisibility(View.VISIBLE);
-        textView.setText(translationResponse.getText().get(0));
+        translationTextView.setText(translationResponse.getText().get(0));
+        translationTextView.setVisibility(View.VISIBLE);
     }
 
     @Override

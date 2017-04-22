@@ -2,6 +2,7 @@ package combruce_willis.httpsgithub.yamblztranslate.View;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,12 +10,25 @@ import android.widget.TextView;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
+import java.util.Objects;
 
 import combruce_willis.httpsgithub.yamblztranslate.R;
 
 public class LanguageRecyclerViewAdapter extends RecyclerView.Adapter<LanguageRecyclerViewAdapter.ViewHolder> {
 
     private List<String> languages;
+    private int languageType;
+    private Map<String,String> languagesWithCode;
+
+    public void setLanguagesWithCode(Map<String, String> languagesWithCode) {
+        this.languagesWithCode = languagesWithCode;
+    }
+
+    public void setLanguageType(int languageType) {
+        this.languageType = languageType;
+    }
+
     private Callback callback;
 
     public LanguageRecyclerViewAdapter() {
@@ -42,7 +56,14 @@ public class LanguageRecyclerViewAdapter extends RecyclerView.Adapter<LanguageRe
             @Override
             public void onClick(View v) {
                 if (callback != null) {
-                    callback.onItemClick(viewHolder.language);
+                    String languageCode = "";
+                    for (Map.Entry<String, String> entry: languagesWithCode.entrySet()) {
+                        if (Objects.equals(viewHolder.language, entry.getValue())) {
+                            languageCode = entry.getKey();
+                            break;
+                        }
+                    }
+                    callback.onItemClick(viewHolder.language, languageCode, languageType);
                 }
             }
         });
@@ -75,6 +96,6 @@ public class LanguageRecyclerViewAdapter extends RecyclerView.Adapter<LanguageRe
     }
 
     public interface Callback {
-        void onItemClick(String language);
+        void onItemClick(String language, String languageCode, int languageType);
     }
 }

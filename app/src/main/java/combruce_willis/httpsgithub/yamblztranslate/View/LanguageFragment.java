@@ -1,6 +1,7 @@
 package combruce_willis.httpsgithub.yamblztranslate.View;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -26,12 +27,12 @@ public class LanguageFragment extends Fragment implements LanguagesMvpView {
 
     private RecyclerView languagesRecyclerView;
 
-    private static final String ARG_LANGUAGE = "language";
+    private static final String ARG_LANGUAGE = "languageType";
     /**
-     * 0 - source language
-     * 1 - target language
+     * 0 - source languageType
+     * 1 - target languageType
      */
-    private int language = 0;
+    private int languageType = 0;
 
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the
@@ -54,7 +55,7 @@ public class LanguageFragment extends Fragment implements LanguagesMvpView {
         presenter = new LanguagesPresenter();
         presenter.attachView(this);
         if (getArguments() != null) {
-            language = getArguments().getInt(ARG_LANGUAGE);
+            languageType = getArguments().getInt(ARG_LANGUAGE);
         }
     }
 
@@ -66,7 +67,7 @@ public class LanguageFragment extends Fragment implements LanguagesMvpView {
         presenter.loadLanguages("en");
 
         Toolbar toolbar = (Toolbar) view.findViewById(R.id.history_toolbar);
-        if (language == 0) toolbar.setTitle(R.string.source_language);
+        if (languageType == 0) toolbar.setTitle(R.string.source_language);
         else toolbar.setTitle(R.string.target_language);
         toolbar.setTitleTextColor(Color.WHITE);
         ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
@@ -84,7 +85,17 @@ public class LanguageFragment extends Fragment implements LanguagesMvpView {
         LanguageRecyclerViewAdapter adapter = new LanguageRecyclerViewAdapter();
         adapter.setCallback(new LanguageRecyclerViewAdapter.Callback() {
             @Override
-            public void onItemClick(String language) {
+            public void onItemClick(String language, String languageCode, int languageType) {
+                SharedPreferences.Editor editor = getActivity().getPreferences(Context.MODE_PRIVATE).edit();
+                if (languageType == 0) {
+                    editor.putString(getString(R.string.saved_source_language_code),languageCode);
+                    editor.putString(getString(R.string.saved_source_language_full), language);
+                }
+                else {
+                    editor.putString(getString(R.string.saved_target_language_code), languageCode);
+                    editor.putString(getString(R.string.saved_target_language_full), language);
+                }
+                editor.apply();
                 getActivity().onBackPressed();
             }
         });
@@ -114,6 +125,8 @@ public class LanguageFragment extends Fragment implements LanguagesMvpView {
     public void showLanguages(LanguagesList languages) {
         LanguageRecyclerViewAdapter adapter = (LanguageRecyclerViewAdapter) languagesRecyclerView.getAdapter();
         adapter.setLanguages(new ArrayList<>(languages.getLanguages().values()));
+        adapter.setLanguageType(this.languageType);
+        adapter.setLanguagesWithCode(languages.getLanguages()); //TODO simplify this!!!
         adapter.notifyDataSetChanged();
         languagesRecyclerView.requestFocus();
         languagesRecyclerView.setVisibility(View.VISIBLE);
