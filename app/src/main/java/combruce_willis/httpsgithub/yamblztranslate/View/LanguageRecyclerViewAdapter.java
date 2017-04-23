@@ -2,7 +2,6 @@ package combruce_willis.httpsgithub.yamblztranslate.View;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
-import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -50,7 +49,7 @@ public class LanguageRecyclerViewAdapter extends RecyclerView.Adapter<LanguageRe
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         final View view = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.fragment_language, parent, false);
+                .inflate(R.layout.fragment_language_item, parent, false);
         final ViewHolder viewHolder = new ViewHolder(view);
         viewHolder.contentLayout.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -17,7 +17,7 @@
         android:paddingTop="?attr/actionBarSize"
         app:layoutManager="LinearLayoutManager"
         tools:context="combruce_willis.httpsgithub.yamblztranslate.View.LanguageFragment"
-        tools:listitem="@layout/fragment_history" />
+        tools:listitem="@layout/fragment_history_item" />
 
     <include layout="@layout/toolbar_history"/>
 

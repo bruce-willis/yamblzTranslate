@@ -18,7 +18,7 @@
     app:layoutManager="LinearLayoutManager"
     tools:context="combruce_willis.httpsgithub.yamblztranslate.View.LanguageFragment"
     android:visibility="gone"
-    tools:listitem="@layout/fragment_language" />
+    tools:listitem="@layout/fragment_language_item" />
 
     <include layout="@layout/toolbar_history"/>
 
