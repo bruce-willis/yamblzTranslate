@@ -20,9 +20,11 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import combruce_willis.httpsgithub.yamblztranslate.Model.HistoryDatabase;
 import combruce_willis.httpsgithub.yamblztranslate.Model.TranslationResponse;
 import combruce_willis.httpsgithub.yamblztranslate.Presenter.TranslatePresenter;
 import combruce_willis.httpsgithub.yamblztranslate.R;
+import io.realm.Realm;
 
 
 /**
@@ -31,6 +33,8 @@ import combruce_willis.httpsgithub.yamblztranslate.R;
 public class TranslateFragment extends Fragment implements TranslateMvpView{
 
     private TranslatePresenter presenter;
+
+    private Realm realm;
 
     private TextView translationTextView;
     private EditText editText;
@@ -64,8 +68,11 @@ public class TranslateFragment extends Fragment implements TranslateMvpView{
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         presenter = new TranslatePresenter();
         presenter.attachView(this);
+
+        realm = Realm.getDefaultInstance();
     }
 
     @Override
@@ -168,6 +175,17 @@ public class TranslateFragment extends Fragment implements TranslateMvpView{
         progressBar.setVisibility(View.GONE);
         translationTextView.setText(translationResponse.getText().get(0));
         translationTextView.setVisibility(View.VISIBLE);
+        WriteToDatabase();
+    }
+
+    public void WriteToDatabase() {
+        realm.beginTransaction();
+        HistoryDatabase history = realm.createObject(HistoryDatabase.class);
+        history.setSourceString(editText.getText().toString());
+        history.setTranslationString(translationTextView.getText().toString());
+        history.setLanguageSourceCode(languageSourceCode);
+        history.setLanguageTargetCode(languageTargetCode);
+        realm.commitTransaction();
     }
 
     @Override

@@ -4,6 +4,8 @@ import android.app.Application;
 import android.content.Context;
 
 import combruce_willis.httpsgithub.yamblztranslate.Model.TranslateService;
+import io.realm.Realm;
+import io.realm.RealmConfiguration;
 import rx.Scheduler;
 import rx.schedulers.Schedulers;
 
@@ -18,6 +20,18 @@ public class YamblzTranslate extends Application{
 
     public static YamblzTranslate get(Context context) {
         return (YamblzTranslate) context.getApplicationContext();
+    }
+
+    @Override
+    public void onCreate() {
+        super.onCreate();
+        Realm.init(this);
+        RealmConfiguration configuration = new RealmConfiguration.Builder()
+                .name(Realm.DEFAULT_REALM_NAME)
+                .schemaVersion(0)
+                .deleteRealmIfMigrationNeeded()
+                .build();
+        Realm.setDefaultConfiguration(configuration);
     }
 
     public TranslateService getTranslateService() {
