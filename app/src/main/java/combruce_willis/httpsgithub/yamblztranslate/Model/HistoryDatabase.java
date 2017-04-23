@@ -21,6 +21,8 @@ public class HistoryDatabase extends RealmObject {
 
     @Required
     private String languageTargetCode;
+    
+    private boolean favorite = false;
 
     public String getSourceString() {
         return sourceString;
@@ -54,4 +56,11 @@ public class HistoryDatabase extends RealmObject {
         this.languageTargetCode = languageTargetCode;
     }
 
+    public boolean isFavorite() {
+        return favorite;
+    }
+
+    public void setFavorite(boolean favorite) {
+        this.favorite = favorite;
+    }
 }

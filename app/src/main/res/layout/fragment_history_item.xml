@@ -11,7 +11,7 @@
         android:layout_marginLeft="8dp"
         android:layout_alignParentLeft="true"
         android:layout_centerVertical="true"
-        app:srcCompat="@drawable/ic_bookmark_black_24dp" />
+        app:srcCompat="@drawable/ic_bookmark_border_black_24dp" />
 
     <TextView
         android:id="@+id/history_language_source"

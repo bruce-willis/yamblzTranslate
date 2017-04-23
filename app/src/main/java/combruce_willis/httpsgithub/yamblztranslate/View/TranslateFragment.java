@@ -181,7 +181,7 @@ public class TranslateFragment extends Fragment implements TranslateMvpView{
             @Override
             public void execute(Realm realm) {
                 HistoryDatabase history = realm.createObject(HistoryDatabase.class);
-                history.setSourceString(editText.getText().toString());
+                history.setSourceString(editText.getText().toString().trim());
                 history.setTranslationString(translationTextView.getText().toString());
                 history.setLanguageSourceCode(languageSourceCode);
                 history.setLanguageTargetCode(languageTargetCode);
