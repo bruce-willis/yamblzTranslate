@@ -1,5 +1,7 @@
 package combruce_willis.httpsgithub.yamblztranslate.Model;
 
+import java.util.Date;
+
 import io.realm.Realm;
 import io.realm.RealmObject;
 import io.realm.annotations.Required;
@@ -21,6 +23,9 @@ public class HistoryDatabase extends RealmObject {
 
     @Required
     private String languageTargetCode;
+
+    @Required
+    private Date date;
     
     private boolean favorite = false;
 
@@ -62,5 +67,13 @@ public class HistoryDatabase extends RealmObject {
 
     public void setFavorite(boolean favorite) {
         this.favorite = favorite;
+    }
+
+    public Date getDate() {
+        return date;
+    }
+
+    public void setDate(Date date) {
+        this.date = date;
     }
 }

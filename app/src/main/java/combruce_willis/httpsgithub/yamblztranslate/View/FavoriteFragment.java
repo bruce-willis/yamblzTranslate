@@ -22,6 +22,7 @@ import combruce_willis.httpsgithub.yamblztranslate.Model.HistoryDatabase;
 import combruce_willis.httpsgithub.yamblztranslate.R;
 import io.realm.Realm;
 import io.realm.RealmResults;
+import io.realm.Sort;
 
 
 /**
@@ -52,11 +53,11 @@ public class FavoriteFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         setHasOptionsMenu(true);
-        View view =  inflater.inflate(R.layout.fragment_history_list, container, false);
+        View view = inflater.inflate(R.layout.fragment_history_list, container, false);
         Toolbar toolbar = (Toolbar) view.findViewById(R.id.history_toolbar);
         toolbar.setTitle(R.string.title_favorites);
         toolbar.setTitleTextColor(Color.WHITE);
-        ((AppCompatActivity)getActivity()).setSupportActionBar(toolbar);
+        ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
 
         favoriteRecyclerView = (RecyclerView) view.findViewById(R.id.history_recycler_view);
         setupRecyclerView(favoriteRecyclerView);
@@ -78,11 +79,11 @@ public class FavoriteFragment extends Fragment {
 
     private void setupRecyclerView(RecyclerView recyclerView) {
         Realm realm = Realm.getDefaultInstance();
-        RealmResults<HistoryDatabase> results = realm.where(HistoryDatabase.class)
-                .equalTo("favorite", true)
-                .findAll();
-        List<HistoryDatabase> historyList = realm.copyFromRealm(results);
-        HistoryRecyclerViewAdapter adapter = new HistoryRecyclerViewAdapter(historyList, listener);
+        HistoryRecyclerViewAdapter adapter = new HistoryRecyclerViewAdapter(
+                realm.where(HistoryDatabase.class)
+                        .equalTo("favorite", true)
+                        .findAllSorted("date", Sort.DESCENDING),
+                listener);
         recyclerView.setAdapter(adapter);
         adapter.notifyDataSetChanged();
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());

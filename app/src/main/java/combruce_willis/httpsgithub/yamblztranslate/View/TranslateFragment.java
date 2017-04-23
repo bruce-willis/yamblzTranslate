@@ -3,12 +3,14 @@ package combruce_willis.httpsgithub.yamblztranslate.View;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.icu.util.Calendar;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.InputType;
+import android.text.format.DateUtils;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,6 +21,8 @@ import android.widget.ImageButton;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import java.util.Date;
 
 import combruce_willis.httpsgithub.yamblztranslate.Model.HistoryDatabase;
 import combruce_willis.httpsgithub.yamblztranslate.Model.TranslationResponse;
@@ -183,16 +187,16 @@ public class TranslateFragment extends Fragment implements TranslateMvpView {
                 .equalTo("languageSourceCode", languageSourceCode)
                 .equalTo("languageTargetCode", languageTargetCode)
                 .findFirst();
-        if (translation == null) realm.executeTransaction(new Realm.Transaction() {
-            @Override
-            public void execute(Realm realm) {
-                HistoryDatabase history = realm.createObject(HistoryDatabase.class);
-                history.setSourceString(sourceString);
-                history.setTranslationString(translationTextView.getText().toString());
-                history.setLanguageSourceCode(languageSourceCode);
-                history.setLanguageTargetCode(languageTargetCode);
-            }
-        });
+        realm.beginTransaction();
+        if (translation == null) {
+            HistoryDatabase history = realm.createObject(HistoryDatabase.class);
+            history.setSourceString(sourceString);
+            history.setTranslationString(translationTextView.getText().toString());
+            history.setLanguageSourceCode(languageSourceCode);
+            history.setLanguageTargetCode(languageTargetCode);
+            history.setDate(new Date());
+        } else translation.setDate(new Date());
+        realm.commitTransaction();
     }
 
     @Override

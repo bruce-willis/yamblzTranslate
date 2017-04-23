@@ -24,6 +24,7 @@ import combruce_willis.httpsgithub.yamblztranslate.Model.HistoryDatabase;
 import combruce_willis.httpsgithub.yamblztranslate.R;
 import io.realm.Realm;
 import io.realm.RealmResults;
+import io.realm.Sort;
 
 
 /**
@@ -80,9 +81,10 @@ public class HistoryFragment extends Fragment {
 
     private void setupRecyclerView(RecyclerView recyclerView) {
         Realm realm = Realm.getDefaultInstance();
-        RealmResults<HistoryDatabase> results = realm.where(HistoryDatabase.class).findAll();
-        List<HistoryDatabase> historyList = realm.copyFromRealm(results);
-        HistoryRecyclerViewAdapter adapter = new HistoryRecyclerViewAdapter(historyList, listener);
+        HistoryRecyclerViewAdapter adapter = new HistoryRecyclerViewAdapter(
+                realm.where(HistoryDatabase.class)
+                        .findAllSorted("date", Sort.DESCENDING),
+                listener);
         recyclerView.setAdapter(adapter);
         adapter.notifyDataSetChanged();
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
