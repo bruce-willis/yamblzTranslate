@@ -17,6 +17,7 @@ Offline mode (like [Shazam offline](https://support.shazam.com/hc/en-us/articles
 * [GSON](https://github.com/square/retrofit/tree/master/retrofit-converters/gson)
 * [RxJava Adapter](https://github.com/square/retrofit/tree/master/retrofit-adapters/rxjava)
 * [RxAndroid: Reactive Extensions for Android](https://github.com/ReactiveX/RxAndroid/tree/1.x)
+* [Realm](https://github.com/realm/realm-java)
 
 ### Used materials / Thanks
 * #### Bottom navigation

@@ -1,6 +1,5 @@
 package combruce_willis.httpsgithub.yamblztranslate.Presenter;
 
-import combruce_willis.httpsgithub.yamblztranslate.Model.LanguagesList;
 import combruce_willis.httpsgithub.yamblztranslate.Model.TranslateService;
 import combruce_willis.httpsgithub.yamblztranslate.Model.TranslationResponse;
 import combruce_willis.httpsgithub.yamblztranslate.View.TranslateMvpView;
@@ -30,7 +29,7 @@ public class TranslatePresenter implements Presenter<TranslateMvpView> {
         if (subscription != null) subscription.unsubscribe();
     }
 
-    public void Translate(String textEntered, String language) {
+    public void Translate(String textEntered, String direction) {
         String text = textEntered.trim();
         if (text.isEmpty()) return;
 
@@ -40,7 +39,7 @@ public class TranslatePresenter implements Presenter<TranslateMvpView> {
 
         YamblzTranslate application = YamblzTranslate.get(translateMvpView.getContext());
         TranslateService translateService = application.getTranslateService();
-        subscription = translateService.getTranslation(text, language)
+        subscription = translateService.getTranslation(text, direction)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(application.defaultSubscribeScheduler())
                 .subscribe(new Subscriber<TranslationResponse>() {

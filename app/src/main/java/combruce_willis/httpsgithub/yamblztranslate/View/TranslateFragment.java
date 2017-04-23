@@ -3,12 +3,14 @@ package combruce_willis.httpsgithub.yamblztranslate.View;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.icu.util.Calendar;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.InputType;
+import android.text.format.DateUtils;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,17 +22,23 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.Date;
+
+import combruce_willis.httpsgithub.yamblztranslate.Model.HistoryDatabase;
 import combruce_willis.httpsgithub.yamblztranslate.Model.TranslationResponse;
 import combruce_willis.httpsgithub.yamblztranslate.Presenter.TranslatePresenter;
 import combruce_willis.httpsgithub.yamblztranslate.R;
+import io.realm.Realm;
 
 
 /**
  * A simple {@link Fragment} subclass.
  */
-public class TranslateFragment extends Fragment implements TranslateMvpView{
+public class TranslateFragment extends Fragment implements TranslateMvpView {
 
     private TranslatePresenter presenter;
+
+    private Realm realm;
 
     private TextView translationTextView;
     private EditText editText;
@@ -64,8 +72,11 @@ public class TranslateFragment extends Fragment implements TranslateMvpView{
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         presenter = new TranslatePresenter();
         presenter.attachView(this);
+
+        realm = Realm.getDefaultInstance();
     }
 
     @Override
@@ -94,7 +105,7 @@ public class TranslateFragment extends Fragment implements TranslateMvpView{
             }
         });
 
-        sharedPreferences  = getActivity().getPreferences(Context.MODE_PRIVATE);
+        sharedPreferences = getActivity().getPreferences(Context.MODE_PRIVATE);
         updateTitle();
 
         swapLanguagesButton = (ImageButton) view.findViewById(R.id.swap_languages);
@@ -103,13 +114,11 @@ public class TranslateFragment extends Fragment implements TranslateMvpView{
             public void onClick(View v) {
                 SharedPreferences.Editor editor = sharedPreferences.edit();
 
-                String tempLanguage = languageSourceFull;
                 editor.putString(getString(R.string.saved_source_language_full), languageTargetFull);
-                editor.putString(getString(R.string.saved_target_language_full), tempLanguage);
+                editor.putString(getString(R.string.saved_target_language_full), languageSourceFull);
 
-                String tempLanguageCode = languageSourceCode;
                 editor.putString(getString(R.string.saved_source_language_code), languageTargetCode);
-                editor.putString(getString(R.string.saved_target_language_code), tempLanguageCode);
+                editor.putString(getString(R.string.saved_target_language_code), languageSourceCode);
 
                 editor.apply();
 
@@ -127,7 +136,7 @@ public class TranslateFragment extends Fragment implements TranslateMvpView{
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
                 if (actionId == EditorInfo.IME_ACTION_DONE) {
-                   presenter.Translate(editText.getText().toString(), languageSourceCode + "-" + languageTargetCode);
+                    presenter.Translate(editText.getText().toString(), languageSourceCode + "-" + languageTargetCode);
                 }
                 return false;
             }
@@ -136,7 +145,7 @@ public class TranslateFragment extends Fragment implements TranslateMvpView{
         return view;
     }
 
-    private void updateTitle(){
+    private void updateTitle() {
         languageSourceFull = sharedPreferences.getString(getString(R.string.saved_source_language_full), "English");
         languageSourceCode = sharedPreferences.getString(getString(R.string.saved_source_language_code), "en");
         languageTargetFull = sharedPreferences.getString(getString(R.string.saved_target_language_full), "Russian");
@@ -168,6 +177,26 @@ public class TranslateFragment extends Fragment implements TranslateMvpView{
         progressBar.setVisibility(View.GONE);
         translationTextView.setText(translationResponse.getText().get(0));
         translationTextView.setVisibility(View.VISIBLE);
+        WriteToDatabase();
+    }
+
+    public void WriteToDatabase() {
+        final String sourceString = editText.getText().toString().trim();
+        HistoryDatabase translation = realm.where(HistoryDatabase.class)
+                .equalTo("sourceString", sourceString)
+                .equalTo("languageSourceCode", languageSourceCode)
+                .equalTo("languageTargetCode", languageTargetCode)
+                .findFirst();
+        realm.beginTransaction();
+        if (translation == null) {
+            HistoryDatabase history = realm.createObject(HistoryDatabase.class);
+            history.setSourceString(sourceString);
+            history.setTranslationString(translationTextView.getText().toString());
+            history.setLanguageSourceCode(languageSourceCode);
+            history.setLanguageTargetCode(languageTargetCode);
+            history.setDate(new Date());
+        } else translation.setDate(new Date());
+        realm.commitTransaction();
     }
 
     @Override

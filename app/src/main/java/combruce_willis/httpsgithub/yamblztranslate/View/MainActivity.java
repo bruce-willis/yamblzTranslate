@@ -11,7 +11,7 @@ import com.ncapdevi.fragnav.FragNavController;
 
 import combruce_willis.httpsgithub.yamblztranslate.R;
 
-public class MainActivity extends AppCompatActivity implements TranslateFragment.FragmentNavigation, FragNavController.RootFragmentListener {
+public class MainActivity extends AppCompatActivity implements TranslateFragment.FragmentNavigation, FragNavController.RootFragmentListener, HistoryFragment.OnHistoryFragmentInteractionListener {
 
     private FragNavController fragNavController;
 
@@ -86,5 +86,10 @@ public class MainActivity extends AppCompatActivity implements TranslateFragment
     public boolean onSupportNavigateUp() {
         onBackPressed();
         return true;
+    }
+
+    @Override
+    public void onHistoryFragmentInteraction(String item) {
+
     }
 }
