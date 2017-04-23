@@ -110,13 +110,11 @@ public class TranslateFragment extends Fragment implements TranslateMvpView{
             public void onClick(View v) {
                 SharedPreferences.Editor editor = sharedPreferences.edit();
 
-                String tempLanguage = languageSourceFull;
                 editor.putString(getString(R.string.saved_source_language_full), languageTargetFull);
-                editor.putString(getString(R.string.saved_target_language_full), tempLanguage);
+                editor.putString(getString(R.string.saved_target_language_full), languageSourceFull);
 
-                String tempLanguageCode = languageSourceCode;
                 editor.putString(getString(R.string.saved_source_language_code), languageTargetCode);
-                editor.putString(getString(R.string.saved_target_language_code), tempLanguageCode);
+                editor.putString(getString(R.string.saved_target_language_code), languageSourceCode);
 
                 editor.apply();
 
