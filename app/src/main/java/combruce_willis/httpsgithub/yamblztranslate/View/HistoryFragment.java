@@ -31,13 +31,9 @@ import io.realm.RealmResults;
  */
 public class HistoryFragment extends Fragment {
 
-    private Realm realm;
-
-    private TextView languageSourceTextView;
     private RecyclerView historyRecyclerView;
 
     private OnHistoryFragmentInteractionListener listener;
-
 
     public HistoryFragment() {
         // Required empty public constructor
@@ -51,12 +47,6 @@ public class HistoryFragment extends Fragment {
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         inflater.inflate(R.menu.menu_items, menu);
         super.onCreateOptionsMenu(menu, inflater);
-    }
-
-    @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        realm = Realm.getDefaultInstance();
     }
 
     @Override
@@ -89,6 +79,7 @@ public class HistoryFragment extends Fragment {
     }
 
     private void setupRecyclerView(RecyclerView recyclerView) {
+        Realm realm = Realm.getDefaultInstance();
         RealmResults<HistoryDatabase> results = realm.where(HistoryDatabase.class).findAll();
         List<HistoryDatabase> historyList = realm.copyFromRealm(results);
         HistoryRecyclerViewAdapter adapter = new HistoryRecyclerViewAdapter(historyList, listener);
