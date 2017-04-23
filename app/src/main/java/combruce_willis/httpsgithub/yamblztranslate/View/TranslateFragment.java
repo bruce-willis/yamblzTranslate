@@ -177,13 +177,16 @@ public class TranslateFragment extends Fragment implements TranslateMvpView{
     }
 
     public void WriteToDatabase() {
-        realm.beginTransaction();
-        HistoryDatabase history = realm.createObject(HistoryDatabase.class);
-        history.setSourceString(editText.getText().toString());
-        history.setTranslationString(translationTextView.getText().toString());
-        history.setLanguageSourceCode(languageSourceCode);
-        history.setLanguageTargetCode(languageTargetCode);
-        realm.commitTransaction();
+        realm.executeTransaction(new Realm.Transaction() {
+            @Override
+            public void execute(Realm realm) {
+                HistoryDatabase history = realm.createObject(HistoryDatabase.class);
+                history.setSourceString(editText.getText().toString());
+                history.setTranslationString(translationTextView.getText().toString());
+                history.setLanguageSourceCode(languageSourceCode);
+                history.setLanguageTargetCode(languageTargetCode);
+            }
+        });
     }
 
     @Override
