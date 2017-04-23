@@ -52,7 +52,11 @@ public class HistoryRecyclerViewAdapter extends RecyclerView.Adapter<HistoryRecy
         holder.favoriteImageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                HistoryDatabase updatingItem = realm.where(HistoryDatabase.class).equalTo("sourceString", item.getSourceString()).findFirst();
+                HistoryDatabase updatingItem = realm.where(HistoryDatabase.class)
+                        .equalTo("sourceString", item.getSourceString())
+                        .equalTo("languageSourceCode", item.getLanguageSourceCode())
+                        .equalTo("languageTargetCode", item.getLanguageTargetCode())
+                        .findFirst();
                 realm.beginTransaction();
                 updatingItem.setFavorite(!updatingItem.isFavorite());
                 realm.commitTransaction();

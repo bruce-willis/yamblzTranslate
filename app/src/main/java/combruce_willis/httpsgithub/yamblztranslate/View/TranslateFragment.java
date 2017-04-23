@@ -30,7 +30,7 @@ import io.realm.Realm;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class TranslateFragment extends Fragment implements TranslateMvpView{
+public class TranslateFragment extends Fragment implements TranslateMvpView {
 
     private TranslatePresenter presenter;
 
@@ -101,7 +101,7 @@ public class TranslateFragment extends Fragment implements TranslateMvpView{
             }
         });
 
-        sharedPreferences  = getActivity().getPreferences(Context.MODE_PRIVATE);
+        sharedPreferences = getActivity().getPreferences(Context.MODE_PRIVATE);
         updateTitle();
 
         swapLanguagesButton = (ImageButton) view.findViewById(R.id.swap_languages);
@@ -132,7 +132,7 @@ public class TranslateFragment extends Fragment implements TranslateMvpView{
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
                 if (actionId == EditorInfo.IME_ACTION_DONE) {
-                   presenter.Translate(editText.getText().toString(), languageSourceCode + "-" + languageTargetCode);
+                    presenter.Translate(editText.getText().toString(), languageSourceCode + "-" + languageTargetCode);
                 }
                 return false;
             }
@@ -141,7 +141,7 @@ public class TranslateFragment extends Fragment implements TranslateMvpView{
         return view;
     }
 
-    private void updateTitle(){
+    private void updateTitle() {
         languageSourceFull = sharedPreferences.getString(getString(R.string.saved_source_language_full), "English");
         languageSourceCode = sharedPreferences.getString(getString(R.string.saved_source_language_code), "en");
         languageTargetFull = sharedPreferences.getString(getString(R.string.saved_target_language_full), "Russian");
@@ -177,11 +177,17 @@ public class TranslateFragment extends Fragment implements TranslateMvpView{
     }
 
     public void WriteToDatabase() {
-        realm.executeTransaction(new Realm.Transaction() {
+        final String sourceString = editText.getText().toString().trim();
+        HistoryDatabase translation = realm.where(HistoryDatabase.class)
+                .equalTo("sourceString", sourceString)
+                .equalTo("languageSourceCode", languageSourceCode)
+                .equalTo("languageTargetCode", languageTargetCode)
+                .findFirst();
+        if (translation == null) realm.executeTransaction(new Realm.Transaction() {
             @Override
             public void execute(Realm realm) {
                 HistoryDatabase history = realm.createObject(HistoryDatabase.class);
-                history.setSourceString(editText.getText().toString().trim());
+                history.setSourceString(sourceString);
                 history.setTranslationString(translationTextView.getText().toString());
                 history.setLanguageSourceCode(languageSourceCode);
                 history.setLanguageTargetCode(languageTargetCode);
