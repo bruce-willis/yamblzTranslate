@@ -9,14 +9,12 @@
         xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools"
         android:id="@+id/history_recycler_view"
-        android:name="combruce_willis.httpsgithub.yamblztranslate.View.LanguageFragment"
+        android:name="combruce_willis.httpsgithub.yamblztranslate.View.HistoryFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginLeft="16dp"
-        android:layout_marginRight="16dp"
         android:paddingTop="?attr/actionBarSize"
         app:layoutManager="LinearLayoutManager"
-        tools:context="combruce_willis.httpsgithub.yamblztranslate.View.LanguageFragment"
+        tools:context="combruce_willis.httpsgithub.yamblztranslate.View.HistoryFragment"
         tools:listitem="@layout/fragment_history_item" />
 
     <include layout="@layout/toolbar_history"/>
