@@ -83,7 +83,6 @@ public class TranslatePresenter implements Presenter<TranslateMvpView> {
 
                     @Override
                     public void onError(Throwable e) {
-                        translateMvpView.showMessage("Ooops " + e.getMessage());
                     }
 
                     @Override
