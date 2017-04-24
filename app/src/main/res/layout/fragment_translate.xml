@@ -39,8 +39,9 @@
         android:layout_alignStart="@id/edit_text"
         android:layout_below="@id/edit_text"
         android:layout_marginBottom="@dimen/fragment_margin"
-        android:textSize="18sp"
+        android:textSize="20sp"
         android:textColor="@android:color/black"
+        android:textIsSelectable="true"
         android:freezesText="true"
         android:gravity="start"
         android:visibility="gone" />
