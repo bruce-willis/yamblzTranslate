@@ -220,8 +220,11 @@ public class TranslateFragment extends Fragment implements TranslateMvpView {
     public void showDictionaryMeaning(DictionaryResponse dictionaryResponse) {
         dictionaryTranslationTextView.setText(dictionaryResponse.getDefinitions().get(0).getText());
         dictionaryTranslationTextView.setVisibility(View.VISIBLE);
-        dictionaryTranscriptionTextView.setText("[" + dictionaryResponse.getDefinitions().get(0).getTranscription() + "]");
-        dictionaryTranscriptionTextView.setVisibility(View.VISIBLE);
+        String transcription = dictionaryResponse.getDefinitions().get(0).getTranscription();
+        if (transcription != null) {
+            dictionaryTranscriptionTextView.setText("[" + transcription + "]");
+            dictionaryTranscriptionTextView.setVisibility(View.VISIBLE);
+        }
         DictionaryRecyclerViewAdapter adapter = (DictionaryRecyclerViewAdapter) dictionaryRecyclerView.getAdapter();
         List<TranslationDictionary> list = new ArrayList<>();//(dictionaryResponse.getDefinitions().get(0).getTranslationDictionary());
         for (Definition definition : dictionaryResponse.getDefinitions()) {
