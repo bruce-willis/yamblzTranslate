@@ -22,7 +22,6 @@ public class HistoryRecyclerViewAdapter extends RecyclerView.Adapter<HistoryRecy
 
     private final List<HistoryDatabase> history;
     private Realm realm;
-    private View view;
     private final HistoryFragment.OnHistoryFragmentInteractionListener listener;
 
     public HistoryRecyclerViewAdapter(List<HistoryDatabase> history, HistoryFragment.OnHistoryFragmentInteractionListener listener) {
@@ -70,6 +69,7 @@ public class HistoryRecyclerViewAdapter extends RecyclerView.Adapter<HistoryRecy
 
     @Override
     public int getItemCount() {
+        if (history == null) return 0;
         return history.size();
     }
 
