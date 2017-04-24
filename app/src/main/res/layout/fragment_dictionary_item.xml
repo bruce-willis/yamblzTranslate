@@ -16,8 +16,12 @@
         android:id="@+id/dictionary_item_result"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignTop="@id/dictionary_item_number"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
         android:layout_toEndOf="@id/dictionary_item_number"
+        android:layout_marginStart="@dimen/fragment_margin"
+        android:layout_marginEnd="@dimen/fragment_margin"
+        android:layout_marginBottom="4dp"
         app:flexDirection="row"
         app:flexWrap="wrap" />
 
@@ -26,6 +30,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/dictionary_item_result"
+        android:layout_toEndOf="@id/dictionary_item_number"
+        android:layout_marginStart="@dimen/fragment_margin"
+        android:layout_marginEnd="@dimen/fragment_margin"
+        android:layout_marginBottom="4dp"
         app:flexDirection="row"
         app:flexWrap="wrap" />
 
@@ -34,7 +42,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/dictionary_item_meaning"
-        app:flexDirection="row"
+        android:layout_marginStart="@dimen/fragment_margin"
+        android:layout_marginEnd="@dimen/fragment_margin"
+        app:flexDirection="column"
         app:flexWrap="wrap"/>
 
 

@@ -73,20 +73,38 @@ public class DictionaryRecyclerViewAdapter extends RecyclerView.Adapter<Dictiona
         holder.synonymsFlexboxLayout.addView(textView);
 
         if (item.getSynonym() != null &&!item.getSynonym().isEmpty()) {
-            for (Synonym synonym : item.getSynonym()) {
+            textView = new TextView(mainActivity);
+            setupSynonymTextView(textView);
+            textView.setText(", ");
+            holder.synonymsFlexboxLayout.addView(textView);
+            for (int i = 0; i < item.getSynonym().size(); ++i) {
                 textView = new TextView(mainActivity);
                 setupSynonymTextView(textView);
-                textView.setText(", " + synonym.getText());
+                textView.setText(item.getSynonym().get(i).getText());
                 holder.synonymsFlexboxLayout.addView(textView);
+
+                if (i + 1 != item.getSynonym().size()) {
+                    textView = new TextView(mainActivity);
+                    setupSynonymTextView(textView);
+                    textView.setText(", ");
+                    holder.synonymsFlexboxLayout.addView(textView);
+                }
             }
         }
 
         if (item.getMeaning() != null &&!item.getMeaning().isEmpty()) {
-            for (Meaning meaning : item.getMeaning()) {
+            for (int i = 0; i < item.getMeaning().size(); ++i) {
                 textView = new TextView(mainActivity);
                 setupMeaningTextView(textView);
-                textView.setText(meaning.getText());
+                textView.setText(item.getMeaning().get(i).getText());
                 holder.meaningsFlexboxLayout.addView(textView);
+
+                if (i + 1 != item.getMeaning().size()) {
+                    textView = new TextView(mainActivity);
+                    setupMeaningTextView(textView);
+                    textView.setText(", ");
+                    holder.meaningsFlexboxLayout.addView(textView);
+                }
             }
         }
 
@@ -114,7 +132,7 @@ public class DictionaryRecyclerViewAdapter extends RecyclerView.Adapter<Dictiona
 
     private void setupSampleTextView(TextView textView) {
         textView.setLayoutParams(params);
-        textView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 14);
+        textView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 15);
         textView.setTextColor(Color.LTGRAY);
     }
 

@@ -39,6 +39,8 @@
         android:layout_alignStart="@id/edit_text"
         android:layout_below="@id/edit_text"
         android:layout_marginBottom="@dimen/fragment_margin"
+        android:textSize="18sp"
+        android:textColor="@android:color/black"
         android:freezesText="true"
         android:gravity="start"
         android:visibility="gone" />
@@ -50,6 +52,8 @@
         android:layout_below="@id/translation"
         android:layout_alignStart="@id/translation"
         android:layout_marginEnd="@dimen/fragment_margin"
+        android:textSize="16sp"
+        android:textColor="@android:color/darker_gray"
         android:freezesText="true"
         android:visibility="gone" />
 
@@ -59,6 +63,8 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/translation"
         android:layout_toEndOf="@id/dictionary_translation_result"
+        android:textSize="16sp"
+        android:textColor="@android:color/darker_gray"
         android:freezesText="true"
         android:visibility="gone" />
 
@@ -68,6 +74,7 @@
         android:layout_height="match_parent"
         android:layout_alignStart="@id/dictionary_translation_result"
         android:layout_below="@id/dictionary_translation_result"
+        android:layout_marginTop="@dimen/fragment_margin"
         android:layout_marginEnd="@dimen/fragment_margin"
         android:visibility="gone" />
 
