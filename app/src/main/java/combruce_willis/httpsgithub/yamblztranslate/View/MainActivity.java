@@ -10,6 +10,9 @@ import android.view.MenuItem;
 import com.ncapdevi.fragnav.FragNavController;
 
 import combruce_willis.httpsgithub.yamblztranslate.R;
+import combruce_willis.httpsgithub.yamblztranslate.View.Fragment.FavoriteFragment;
+import combruce_willis.httpsgithub.yamblztranslate.View.Fragment.HistoryFragment;
+import combruce_willis.httpsgithub.yamblztranslate.View.Fragment.TranslateFragment;
 
 public class MainActivity extends AppCompatActivity implements TranslateFragment.FragmentNavigation, FragNavController.RootFragmentListener, HistoryFragment.OnHistoryFragmentInteractionListener {
 

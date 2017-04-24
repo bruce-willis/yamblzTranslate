@@ -1,9 +1,8 @@
 package combruce_willis.httpsgithub.yamblztranslate.Presenter;
 
 import combruce_willis.httpsgithub.yamblztranslate.Model.LanguagesList;
-import combruce_willis.httpsgithub.yamblztranslate.Model.TranslateService;
-import combruce_willis.httpsgithub.yamblztranslate.View.LanguagesMvpView;
-import combruce_willis.httpsgithub.yamblztranslate.View.TranslateMvpView;
+import combruce_willis.httpsgithub.yamblztranslate.Model.Service.TranslateService;
+import combruce_willis.httpsgithub.yamblztranslate.View.MvpView.LanguagesMvpView;
 import combruce_willis.httpsgithub.yamblztranslate.YamblzTranslate;
 import rx.Subscriber;
 import rx.Subscription;

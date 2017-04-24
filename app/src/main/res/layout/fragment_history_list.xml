@@ -14,7 +14,7 @@
         android:layout_height="match_parent"
         android:paddingTop="?attr/actionBarSize"
         app:layoutManager="LinearLayoutManager"
-        tools:context="combruce_willis.httpsgithub.yamblztranslate.View.HistoryFragment"
+        tools:context="combruce_willis.httpsgithub.yamblztranslate.View.Fragment.HistoryFragment"
         tools:listitem="@layout/fragment_history_item" />
 
     <include layout="@layout/toolbar_history"/>

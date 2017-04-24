@@ -16,7 +16,7 @@
     android:layout_marginRight="16dp"
     android:paddingTop="?attr/actionBarSize"
     app:layoutManager="LinearLayoutManager"
-    tools:context="combruce_willis.httpsgithub.yamblztranslate.View.LanguageFragment"
+    tools:context="combruce_willis.httpsgithub.yamblztranslate.View.Fragment.LanguageFragment"
     android:visibility="gone"
     tools:listitem="@layout/fragment_language_item" />
 

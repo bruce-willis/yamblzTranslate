@@ -3,7 +3,8 @@ package combruce_willis.httpsgithub.yamblztranslate;
 import android.app.Application;
 import android.content.Context;
 
-import combruce_willis.httpsgithub.yamblztranslate.Model.TranslateService;
+import combruce_willis.httpsgithub.yamblztranslate.Model.Service.DictionaryService;
+import combruce_willis.httpsgithub.yamblztranslate.Model.Service.TranslateService;
 import io.realm.Realm;
 import io.realm.RealmConfiguration;
 import rx.Scheduler;
@@ -16,6 +17,7 @@ import rx.schedulers.Schedulers;
 public class YamblzTranslate extends Application{
 
     private TranslateService translateService;
+    private DictionaryService dictionaryService;
     private Scheduler defaultSubscribeScheduler;
 
     public static YamblzTranslate get(Context context) {
@@ -43,6 +45,17 @@ public class YamblzTranslate extends Application{
 
     public void setTranslateService(TranslateService translateService) {
         this.translateService = translateService;
+    }
+
+    public DictionaryService getDictionaryService() {
+        if (dictionaryService == null) {
+            dictionaryService = DictionaryService.Factory.create();
+        }
+        return dictionaryService;
+    }
+
+    public void setDictionaryService(DictionaryService dictionaryService) {
+        this.dictionaryService = dictionaryService;
     }
 
     public Scheduler defaultSubscribeScheduler() {

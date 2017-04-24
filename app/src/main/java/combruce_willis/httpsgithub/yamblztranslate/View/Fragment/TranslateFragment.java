@@ -1,16 +1,14 @@
-package combruce_willis.httpsgithub.yamblztranslate.View;
+package combruce_willis.httpsgithub.yamblztranslate.View.Fragment;
 
 
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.icu.util.Calendar;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.InputType;
-import android.text.format.DateUtils;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -28,6 +26,7 @@ import combruce_willis.httpsgithub.yamblztranslate.Model.HistoryDatabase;
 import combruce_willis.httpsgithub.yamblztranslate.Model.TranslationResponse;
 import combruce_willis.httpsgithub.yamblztranslate.Presenter.TranslatePresenter;
 import combruce_willis.httpsgithub.yamblztranslate.R;
+import combruce_willis.httpsgithub.yamblztranslate.View.MvpView.TranslateMvpView;
 import io.realm.Realm;
 
 
@@ -178,6 +177,7 @@ public class TranslateFragment extends Fragment implements TranslateMvpView {
         translationTextView.setText(translationResponse.getText().get(0));
         translationTextView.setVisibility(View.VISIBLE);
         WriteToDatabase();
+        presenter.Meaning(editText.getText().toString(), languageSourceCode + "-" + languageTargetCode);
     }
 
     public void WriteToDatabase() {
