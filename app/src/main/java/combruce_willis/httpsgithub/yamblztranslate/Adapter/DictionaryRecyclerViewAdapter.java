@@ -1,7 +1,9 @@
 package combruce_willis.httpsgithub.yamblztranslate.Adapter;
 
 import android.app.Activity;
+import android.graphics.Color;
 import android.support.v7.widget.RecyclerView;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,6 +28,8 @@ public class DictionaryRecyclerViewAdapter extends RecyclerView.Adapter<Dictiona
 
     private List<TranslationDictionary> translations;
 
+    FlexboxLayout.LayoutParams params;
+
     private Activity mainActivity;
 
     public DictionaryRecyclerViewAdapter() {
@@ -38,6 +42,9 @@ public class DictionaryRecyclerViewAdapter extends RecyclerView.Adapter<Dictiona
 
     public void setMainActivity(Activity mainActivity) {
         this.mainActivity = mainActivity;
+        params = new FlexboxLayout.LayoutParams(
+                ViewGroup.LayoutParams.WRAP_CONTENT,
+                ViewGroup.LayoutParams.WRAP_CONTENT);
     }
 
     @Override
@@ -59,12 +66,8 @@ public class DictionaryRecyclerViewAdapter extends RecyclerView.Adapter<Dictiona
         holder.meaningsFlexboxLayout.removeAllViews();
         holder.samplesFlexboxLayout.removeAllViews();
 
-        FlexboxLayout.LayoutParams params = new FlexboxLayout.LayoutParams(
-                ViewGroup.LayoutParams.WRAP_CONTENT,
-                ViewGroup.LayoutParams.WRAP_CONTENT);
-
         TextView textView = new TextView(mainActivity);
-        textView.setLayoutParams(params);
+        setupSynonymTextView(textView);
         textView.setText(item.getText());
 
         holder.synonymsFlexboxLayout.addView(textView);
@@ -72,7 +75,7 @@ public class DictionaryRecyclerViewAdapter extends RecyclerView.Adapter<Dictiona
         if (item.getSynonym() != null &&!item.getSynonym().isEmpty()) {
             for (Synonym synonym : item.getSynonym()) {
                 textView = new TextView(mainActivity);
-                textView.setLayoutParams(params);
+                setupSynonymTextView(textView);
                 textView.setText(", " + synonym.getText());
                 holder.synonymsFlexboxLayout.addView(textView);
             }
@@ -81,7 +84,7 @@ public class DictionaryRecyclerViewAdapter extends RecyclerView.Adapter<Dictiona
         if (item.getMeaning() != null &&!item.getMeaning().isEmpty()) {
             for (Meaning meaning : item.getMeaning()) {
                 textView = new TextView(mainActivity);
-                textView.setLayoutParams(params);
+                setupMeaningTextView(textView);
                 textView.setText(meaning.getText());
                 holder.meaningsFlexboxLayout.addView(textView);
             }
@@ -90,12 +93,31 @@ public class DictionaryRecyclerViewAdapter extends RecyclerView.Adapter<Dictiona
         if (item.getExample() != null &&!item.getExample().isEmpty()) {
             for (Example example : item.getExample()) {
                 textView = new TextView(mainActivity);
-                textView.setLayoutParams(params);
+                setupSampleTextView(textView);
                 textView.setText(example.getText() + " - " + example.getTr().get(0).getText());
                 holder.samplesFlexboxLayout.addView(textView);
             }
         }
     }
+
+    private void setupSynonymTextView(TextView textView) {
+        textView.setLayoutParams(params);
+        textView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 18);
+        textView.setTextColor(Color.BLACK);
+    }
+
+    private void setupMeaningTextView(TextView textView) {
+        textView.setLayoutParams(params);
+        textView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 18);
+        textView.setTextColor(Color.GRAY);
+    }
+
+    private void setupSampleTextView(TextView textView) {
+        textView.setLayoutParams(params);
+        textView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 14);
+        textView.setTextColor(Color.LTGRAY);
+    }
+
 
     @Override
     public int getItemCount() {

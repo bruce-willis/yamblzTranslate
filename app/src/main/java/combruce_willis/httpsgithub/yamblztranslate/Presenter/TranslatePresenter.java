@@ -79,7 +79,6 @@ public class TranslatePresenter implements Presenter<TranslateMvpView> {
                     public void onCompleted() {
                         if (!dictionaryResponse.getDefinitions().isEmpty())
                             translateMvpView.showDictionaryMeaning(dictionaryResponse);
-                        else translateMvpView.showMessage("excuse me");
                     }
 
                     @Override
