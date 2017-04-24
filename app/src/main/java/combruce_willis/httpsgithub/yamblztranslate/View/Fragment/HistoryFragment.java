@@ -1,10 +1,9 @@
-package combruce_willis.httpsgithub.yamblztranslate.View;
+package combruce_willis.httpsgithub.yamblztranslate.View.Fragment;
 
 
 import android.content.Context;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DividerItemDecoration;
@@ -16,14 +15,11 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
-
-import java.util.List;
 
 import combruce_willis.httpsgithub.yamblztranslate.Model.HistoryDatabase;
 import combruce_willis.httpsgithub.yamblztranslate.R;
+import combruce_willis.httpsgithub.yamblztranslate.Adapter.HistoryRecyclerViewAdapter;
 import io.realm.Realm;
-import io.realm.RealmResults;
 import io.realm.Sort;
 
 

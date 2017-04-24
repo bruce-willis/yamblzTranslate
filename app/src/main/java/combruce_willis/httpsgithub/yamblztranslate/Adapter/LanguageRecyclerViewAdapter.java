@@ -1,4 +1,4 @@
-package combruce_willis.httpsgithub.yamblztranslate.View;
+package combruce_willis.httpsgithub.yamblztranslate.Adapter;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;

@@ -1,7 +1,5 @@
-package combruce_willis.httpsgithub.yamblztranslate.View;
+package combruce_willis.httpsgithub.yamblztranslate.Adapter;
 
-import android.graphics.Color;
-import android.graphics.ColorFilter;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,6 +11,7 @@ import java.util.List;
 
 import combruce_willis.httpsgithub.yamblztranslate.Model.HistoryDatabase;
 import combruce_willis.httpsgithub.yamblztranslate.R;
+import combruce_willis.httpsgithub.yamblztranslate.View.Fragment.HistoryFragment;
 import io.realm.Realm;
 
 /**
@@ -23,7 +22,6 @@ public class HistoryRecyclerViewAdapter extends RecyclerView.Adapter<HistoryRecy
 
     private final List<HistoryDatabase> history;
     private Realm realm;
-    private View view;
     private final HistoryFragment.OnHistoryFragmentInteractionListener listener;
 
     public HistoryRecyclerViewAdapter(List<HistoryDatabase> history, HistoryFragment.OnHistoryFragmentInteractionListener listener) {
@@ -71,6 +69,7 @@ public class HistoryRecyclerViewAdapter extends RecyclerView.Adapter<HistoryRecy
 
     @Override
     public int getItemCount() {
+        if (history == null) return 0;
         return history.size();
     }
 

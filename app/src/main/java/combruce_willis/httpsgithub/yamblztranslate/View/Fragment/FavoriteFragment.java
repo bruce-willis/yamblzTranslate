@@ -1,4 +1,4 @@
-package combruce_willis.httpsgithub.yamblztranslate.View;
+package combruce_willis.httpsgithub.yamblztranslate.View.Fragment;
 
 
 import android.content.Context;
@@ -16,12 +16,10 @@ import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import java.util.List;
-
 import combruce_willis.httpsgithub.yamblztranslate.Model.HistoryDatabase;
 import combruce_willis.httpsgithub.yamblztranslate.R;
+import combruce_willis.httpsgithub.yamblztranslate.Adapter.HistoryRecyclerViewAdapter;
 import io.realm.Realm;
-import io.realm.RealmResults;
 import io.realm.Sort;
 
 

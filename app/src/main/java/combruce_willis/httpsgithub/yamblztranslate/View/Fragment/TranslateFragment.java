@@ -1,16 +1,16 @@
-package combruce_willis.httpsgithub.yamblztranslate.View;
+package combruce_willis.httpsgithub.yamblztranslate.View.Fragment;
 
 
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.icu.util.Calendar;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.DividerItemDecoration;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.text.InputType;
-import android.text.format.DateUtils;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -22,12 +22,24 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.util.Date;
+import com.google.android.flexbox.FlexDirection;
+import com.google.android.flexbox.FlexboxLayoutManager;
+import com.google.android.flexbox.JustifyContent;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Date;
+import java.util.List;
+
+import combruce_willis.httpsgithub.yamblztranslate.Adapter.DictionaryRecyclerViewAdapter;
+import combruce_willis.httpsgithub.yamblztranslate.Model.Dictionary.Definition;
+import combruce_willis.httpsgithub.yamblztranslate.Model.Dictionary.TranslationDictionary;
+import combruce_willis.httpsgithub.yamblztranslate.Model.DictionaryResponse;
 import combruce_willis.httpsgithub.yamblztranslate.Model.HistoryDatabase;
 import combruce_willis.httpsgithub.yamblztranslate.Model.TranslationResponse;
 import combruce_willis.httpsgithub.yamblztranslate.Presenter.TranslatePresenter;
 import combruce_willis.httpsgithub.yamblztranslate.R;
+import combruce_willis.httpsgithub.yamblztranslate.View.MvpView.TranslateMvpView;
 import io.realm.Realm;
 
 
@@ -51,6 +63,11 @@ public class TranslateFragment extends Fragment implements TranslateMvpView {
     private SharedPreferences sharedPreferences;
     private ImageButton swapLanguagesButton;
     private ProgressBar progressBar;
+
+    private TextView dictionaryTranslationTextView;
+    private TextView dictionaryTranscriptionTextView;
+    private RecyclerView dictionaryRecyclerView;
+
     FragmentNavigation fragmentNavigation;
 
     public TranslateFragment() {
@@ -126,11 +143,11 @@ public class TranslateFragment extends Fragment implements TranslateMvpView {
             }
         });
 
-        translationTextView = (TextView) view.findViewById(R.id.editText);
+        translationTextView = (TextView) view.findViewById(R.id.translation);
 
         progressBar = (ProgressBar) view.findViewById(R.id.progressBar);
 
-        editText = (EditText) view.findViewById(R.id.Translation);
+        editText = (EditText) view.findViewById(R.id.edit_text);
         editText.setRawInputType(InputType.TYPE_CLASS_TEXT);
         editText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
@@ -142,6 +159,12 @@ public class TranslateFragment extends Fragment implements TranslateMvpView {
             }
         });
 
+        dictionaryRecyclerView = (RecyclerView) view.findViewById(R.id.dictionary_recyclerView);
+        setupRecyclerView(dictionaryRecyclerView);
+
+        dictionaryTranslationTextView = (TextView) view.findViewById(R.id.dictionary_translation_result);
+        dictionaryTranscriptionTextView = (TextView) view.findViewById(R.id.dictionary_transcription);
+
         return view;
     }
 
@@ -152,6 +175,18 @@ public class TranslateFragment extends Fragment implements TranslateMvpView {
         languageTargetCode = sharedPreferences.getString(getString(R.string.saved_target_language_code), "ru");
         languageSourceTextView.setText(languageSourceFull);
         languageTargetTextView.setText(languageTargetFull);
+    }
+
+    private void setupRecyclerView(RecyclerView recyclerView) {
+        DictionaryRecyclerViewAdapter adapter = new DictionaryRecyclerViewAdapter();
+        adapter.setMainActivity(getActivity());
+        recyclerView.setAdapter(adapter);
+        FlexboxLayoutManager layoutManager = new FlexboxLayoutManager();
+        layoutManager.setFlexDirection(FlexDirection.ROW);
+        layoutManager.setJustifyContent(JustifyContent.FLEX_END);
+        recyclerView.setLayoutManager(layoutManager);
+        recyclerView.addItemDecoration(new DividerItemDecoration(recyclerView.getContext(), DividerItemDecoration.VERTICAL));
+
     }
 
     //TranslateMvpView interface methods implementation
@@ -178,6 +213,24 @@ public class TranslateFragment extends Fragment implements TranslateMvpView {
         translationTextView.setText(translationResponse.getText().get(0));
         translationTextView.setVisibility(View.VISIBLE);
         WriteToDatabase();
+        presenter.Meaning(editText.getText().toString(), languageSourceCode + "-" + languageTargetCode);
+    }
+
+    @Override
+    public void showDictionaryMeaning(DictionaryResponse dictionaryResponse) {
+        dictionaryTranslationTextView.setText(dictionaryResponse.getDefinitions().get(0).getText());
+        dictionaryTranslationTextView.setVisibility(View.VISIBLE);
+        dictionaryTranscriptionTextView.setText("[" + dictionaryResponse.getDefinitions().get(0).getTranscription() + "]");
+        dictionaryTranscriptionTextView.setVisibility(View.VISIBLE);
+        DictionaryRecyclerViewAdapter adapter = (DictionaryRecyclerViewAdapter) dictionaryRecyclerView.getAdapter();
+        List<TranslationDictionary> list = new ArrayList<>();//(dictionaryResponse.getDefinitions().get(0).getTranslationDictionary());
+        for (Definition definition : dictionaryResponse.getDefinitions()) {
+            list.addAll(definition.getTranslationDictionary());
+        }
+        adapter.setDefinitions(list);
+        adapter.notifyDataSetChanged();
+        dictionaryRecyclerView.requestFocus();
+        dictionaryRecyclerView.setVisibility(View.VISIBLE);
     }
 
     public void WriteToDatabase() {

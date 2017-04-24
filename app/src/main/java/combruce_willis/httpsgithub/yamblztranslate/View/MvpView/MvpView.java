@@ -1,4 +1,4 @@
-package combruce_willis.httpsgithub.yamblztranslate.View;
+package combruce_willis.httpsgithub.yamblztranslate.View.MvpView;
 
 import android.content.Context;
 

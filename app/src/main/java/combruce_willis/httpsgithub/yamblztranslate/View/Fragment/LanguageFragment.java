@@ -1,4 +1,4 @@
-package combruce_willis.httpsgithub.yamblztranslate.View;
+package combruce_willis.httpsgithub.yamblztranslate.View.Fragment;
 
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -21,6 +21,8 @@ import java.util.Collections;
 import combruce_willis.httpsgithub.yamblztranslate.Model.LanguagesList;
 import combruce_willis.httpsgithub.yamblztranslate.Presenter.LanguagesPresenter;
 import combruce_willis.httpsgithub.yamblztranslate.R;
+import combruce_willis.httpsgithub.yamblztranslate.Adapter.LanguageRecyclerViewAdapter;
+import combruce_willis.httpsgithub.yamblztranslate.View.MvpView.LanguagesMvpView;
 
 public class LanguageFragment extends Fragment implements LanguagesMvpView {
 
